@@ -3,6 +3,6 @@ module com.mwilson.partsinventory {
     requires javafx.fxml;
 
 
-    opens com.mwilson.partsinventory to javafx.fxml;
-    exports com.mwilson.partsinventory;
+    opens com.mwilson.inventoryfx to javafx.fxml;
+    exports com.mwilson.inventoryfx;
 }

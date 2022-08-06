@@ -1,4 +1,4 @@
-package com.mwilson.partsinventory;
+package com.mwilson.inventoryfx;
 
 public class Outsourced extends Part {
     private String companyName;

@@ -1,4 +1,4 @@
-package com.mwilson.partsinventory;
+package com.mwilson.inventoryfx;
 
 public class InHouse extends Part {
     private int machineId;

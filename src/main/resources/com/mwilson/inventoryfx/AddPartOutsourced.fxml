@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mwilson.inventoryfx.AddPartOutsourced">
+   <children>
+      <Label layoutX="64.0" layoutY="43.0" text="Add Part">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <RadioButton layoutX="180.0" layoutY="45.0" mnemonicParsing="false" text="In-House" />
+      <RadioButton layoutX="351.0" layoutY="45.0" mnemonicParsing="false" text="Outsourced" />
+      <Button layoutX="464.0" layoutY="353.0" mnemonicParsing="false" text="Save" />
+      <Button layoutX="526.0" layoutY="353.0" mnemonicParsing="false" text="Cancel" />
+      <TextField fx:id="fieldID" editable="false" layoutX="141.0" layoutY="111.0" text="Auto Generated" />
+      <Label layoutX="104.0" layoutY="115.0" text="ID" />
+      <TextField fx:id="fieldName" layoutX="141.0" layoutY="146.0" />
+      <TextField fx:id="fieldInv" layoutX="141.0" layoutY="182.0" />
+      <TextField fx:id="fieldCost" layoutX="141.0" layoutY="223.0" />
+      <TextField fx:id="fieldMax" layoutX="141.0" layoutY="262.0" />
+      <TextField />
+      <TextField layoutX="141.0" layoutY="300.0" />
+      <TextField fx:id="fieldMin" layoutX="390.0" layoutY="262.0" />
+      <Label layoutX="96.0" layoutY="150.0" text="Name" />
+      <Label layoutX="96.0" layoutY="186.0" text="Inv" />
+      <Label layoutX="90.0" layoutY="227.0" text="Cost" />
+      <Label layoutX="90.0" layoutY="266.0" text="Max" />
+      <Label layoutX="337.0" layoutY="266.0" text="Min" />
+   </children>
+</AnchorPane>
