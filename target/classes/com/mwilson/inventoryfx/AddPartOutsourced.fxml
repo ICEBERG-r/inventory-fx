@@ -7,17 +7,17 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mwilson.inventoryfx.AddPartOutsourced">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mwilson.inventoryfx.AddPartOutsourced">
    <children>
       <Label layoutX="64.0" layoutY="43.0" text="Add Part">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <RadioButton layoutX="180.0" layoutY="45.0" mnemonicParsing="false" onAction="#InHouseSelected" text="In-House" />
-      <RadioButton layoutX="351.0" layoutY="45.0" mnemonicParsing="false" onAction="#OutsourcedSelected" selected="true" text="Outsourced" />
-      <Button layoutX="464.0" layoutY="353.0" mnemonicParsing="false" onAction="#OnSaveClicked" text="Save" />
-      <Button layoutX="526.0" layoutY="353.0" mnemonicParsing="false" onAction="#OnCancelClicked" text="Cancel" />
+      <RadioButton fx:id="inHouse" layoutX="180.0" layoutY="45.0" mnemonicParsing="false" onAction="#InHouseSelected" text="In-House" />
+      <RadioButton fx:id="outsourced" layoutX="351.0" layoutY="45.0" mnemonicParsing="false" onAction="#OutsourcedSelected" selected="true" text="Outsourced" />
+      <Button fx:id="save" layoutX="464.0" layoutY="353.0" mnemonicParsing="false" onAction="#OnSaveClicked" text="Save" />
+      <Button fx:id="cancel" layoutX="526.0" layoutY="353.0" mnemonicParsing="false" onAction="#OnCancelClicked" text="Cancel" />
       <TextField fx:id="fieldID" editable="false" layoutX="141.0" layoutY="111.0" text="Auto Generated" />
       <Label layoutX="104.0" layoutY="115.0" text="ID" />
       <TextField fx:id="fieldName" layoutX="141.0" layoutY="146.0" />

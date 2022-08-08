@@ -17,10 +17,10 @@ public class AddPart implements Initializable {
     public TextField fieldMax;
     public TextField fieldMachineId;
     public TextField fieldMin;
-    public RadioButton inHouse;
-    public RadioButton outsourced;
-    public Button save;
-    public Button cancel;
+    public RadioButton inHouseRadio;
+    public RadioButton outsourcedRadio;
+    public Button saveButton;
+    public Button cancelButton;
 
     public void initialize(URL url, ResourceBundle resourceBundle){
 
