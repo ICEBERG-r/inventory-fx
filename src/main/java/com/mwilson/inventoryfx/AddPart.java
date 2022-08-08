@@ -9,7 +9,7 @@ import javafx.scene.control.TextField;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class AddPartInHouse implements Initializable {
+public class AddPart implements Initializable {
     public TextField fieldID;
     public TextField fieldName;
     public TextField fieldInv;

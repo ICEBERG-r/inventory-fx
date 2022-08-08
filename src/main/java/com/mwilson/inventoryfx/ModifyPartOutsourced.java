@@ -9,19 +9,20 @@ import javafx.scene.control.TextField;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class AddPartInHouse implements Initializable {
+public class ModifyPartOutsourced implements Initializable {
+    public RadioButton inHouse;
+    public RadioButton outsourced;
+    public Button save;
+    public Button cancel;
     public TextField fieldID;
     public TextField fieldName;
     public TextField fieldInv;
     public TextField fieldCost;
     public TextField fieldMax;
-    public TextField fieldMachineId;
+    public TextField fieldCompanyName;
     public TextField fieldMin;
-    public RadioButton inHouse;
-    public RadioButton outsourced;
-    public Button save;
-    public Button cancel;
 
+    @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
 
     }
