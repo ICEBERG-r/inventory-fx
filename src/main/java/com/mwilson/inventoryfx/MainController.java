@@ -39,7 +39,7 @@ public class MainController implements Initializable {
 
     public void OnAddPartClicked(ActionEvent actionEvent) throws IOException {
         //loads AddPart scene
-        Parent root = FXMLLoader.load(getClass().getResource("com/mwilson/inventoryfx/AddPart.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("AddPart.fxml"));
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setTitle("Add Part");
@@ -49,7 +49,7 @@ public class MainController implements Initializable {
 
     public void OnModifyPartClicked(ActionEvent actionEvent) throws IOException {
         //loads Modify Part scene
-        Parent root = FXMLLoader.load(getClass().getResource("com/mwilson/inventoryfx/ModifyPart.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("ModifyPart.fxml"));
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setTitle("Modify Part");
@@ -63,7 +63,7 @@ public class MainController implements Initializable {
 
     public void OnAddProductClicked(ActionEvent actionEvent) throws IOException {
         //loads AddProduct scene
-        Parent root = FXMLLoader.load(getClass().getResource("com/mwilson/inventoryfx/AddProduct.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("AddProduct.fxml"));
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setTitle("Add Product");
@@ -73,7 +73,7 @@ public class MainController implements Initializable {
 
     public void OnModifyProductClicked(ActionEvent actionEvent) throws IOException {
         //loads ModifyProduct scene
-        Parent root = FXMLLoader.load(getClass().getResource("com/mwilson/inventoryfx/ModifyProduct.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("ModifyProduct.fxml"));
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setTitle("Modify Product");
