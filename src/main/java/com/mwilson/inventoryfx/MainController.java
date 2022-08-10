@@ -1,15 +1,14 @@
 package com.mwilson.inventoryfx;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -26,10 +25,39 @@ public class MainController implements Initializable {
     public Button deleteProduct;
     public TextField partSearch;
     public TextField productSearch;
+    public TableView<Part> partTable;
+    public TableColumn<Object, Object> partIdColumn;
+    public TableColumn<Object, Object> partNameColumn;
+    public TableColumn<Object, Object> partInventoryColumn;
+    public TableColumn<Object, Object> partCostColumn;
+    public TableView<Product> productTable;
+    public TableColumn<Object, Object> productIdColumn;
+    public TableColumn<Object, Object> productNameColumn;
+    public TableColumn<Object, Object> productInventoryColumn;
+    public TableColumn<Object, Object> productCostColumn;
+
+    private ObservableList<Part> allParts = FXCollections.observableArrayList();
+    private ObservableList<Product> allProducts = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        System.out.println("I am initialized.");
+
+        allParts.add(new InHouse(1, "whoozit", 23.00, 22, 1,50 ));
+        allParts.add(new Outsourced(2, "noway", 12.00, 10, 5, 55));
+        allProducts.add(new Product(1001, "product1", 55.00, 4, 2, 20));
+        allProducts.add(new Product(1002, "prod2", 44.00, 3,2,12));
+
+        partIdColumn.setCellValueFactory(new PropertyValueFactory<>("Part.id"));
+        partNameColumn.setCellValueFactory(new PropertyValueFactory<>("Part.name"));
+        partInventoryColumn.setCellValueFactory(new PropertyValueFactory<>("Part.stock"));
+        partCostColumn.setCellValueFactory(new PropertyValueFactory<>("Part.price"));
+        partTable.setItems(allParts);
+
+        productIdColumn.setCellValueFactory(new PropertyValueFactory<>("Product.id"));
+        productNameColumn.setCellValueFactory(new PropertyValueFactory<>("Product.name"));
+        productInventoryColumn.setCellValueFactory(new PropertyValueFactory<>("Product.stock"));
+        productCostColumn.setCellValueFactory(new PropertyValueFactory<>("Product.price"));
+        productTable.setItems(allProducts);
     }
 
 

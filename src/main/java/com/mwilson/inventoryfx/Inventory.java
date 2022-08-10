@@ -3,6 +3,7 @@ package com.mwilson.inventoryfx;
 import javafx.collections.ObservableList;
 
 public class Inventory {
+
     private static ObservableList<Part> allParts(ObservableList<Part> partList){
         return null;
     }
