@@ -42,7 +42,7 @@ public class ModifyPart implements Initializable {
     }
 
     public void OnCancelClicked(ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("Main.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("MainWindow.fxml"));
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setTitle("Inventory Management System");

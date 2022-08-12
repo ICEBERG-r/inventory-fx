@@ -42,27 +42,31 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        allParts.add(new InHouse(1, "whoozit", 23.00, 22, 1,50 ));
-        allParts.add(new Outsourced(2, "noway", 12.00, 10, 5, 55));
+        allParts.add(new InHouse(1, "whoozit", 23.00, 22, 1,50, 101 ));
+        allParts.add(new Outsourced(2, "noway", 12.00, 10, 5, 55, "Ballo"));
         allProducts.add(new Product(1001, "product1", 55.00, 4, 2, 20));
         allProducts.add(new Product(1002, "prod2", 44.00, 3,2,12));
 
-        partIdColumn.setCellValueFactory(new PropertyValueFactory<>("Part.id"));
-        partNameColumn.setCellValueFactory(new PropertyValueFactory<>("Part.name"));
-        partInventoryColumn.setCellValueFactory(new PropertyValueFactory<>("Part.stock"));
-        partCostColumn.setCellValueFactory(new PropertyValueFactory<>("Part.price"));
         partTable.setItems(allParts);
-
-        productIdColumn.setCellValueFactory(new PropertyValueFactory<>("Product.id"));
-        productNameColumn.setCellValueFactory(new PropertyValueFactory<>("Product.name"));
-        productInventoryColumn.setCellValueFactory(new PropertyValueFactory<>("Product.stock"));
-        productCostColumn.setCellValueFactory(new PropertyValueFactory<>("Product.price"));
         productTable.setItems(allProducts);
+
+        partIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        partNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        partInventoryColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        partCostColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+        productIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        productNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        productInventoryColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        productCostColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+
     }
 
 
     public void OnExitClicked(ActionEvent actionEvent) {
+        System.exit(0);
         //exits the program
+        //needs confirmation dialog
     }
 
     public void OnAddPartClicked(ActionEvent actionEvent) throws IOException {
@@ -86,7 +90,12 @@ public class MainController implements Initializable {
     }
 
     public void OnDeletePartClicked(ActionEvent actionEvent) {
-        //opens Y/N prompt. deletes part if 'Y'
+        //needs confirmation dialog prompt
+        Part selectedPart = partTable.getSelectionModel().getSelectedItem();
+        if (selectedPart == null){
+            return;
+        }
+        allParts.remove(selectedPart);
     }
 
     public void OnAddProductClicked(ActionEvent actionEvent) throws IOException {
@@ -110,6 +119,12 @@ public class MainController implements Initializable {
     }
 
     public void OnDeleteProductClicked(ActionEvent actionEvent) {
-        //opens y/n prompt. deletes product if 'Y'
+        //needs confirmation dialog prompt
+        Product selectedProduct = productTable.getSelectionModel().getSelectedItem();
+        if (selectedProduct == null){
+            return;
+        }
+
+        allProducts.remove(selectedProduct);
     }
 }

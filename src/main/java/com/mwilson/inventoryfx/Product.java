@@ -56,15 +56,15 @@ public class Product {
     public int getMax(){
         return max;
     }
-    public void addAssociatedPart(Part part){
-
+    public void addAssociatedPart(ObservableList<Part> part){
+        this.associatedParts.addAll(part);
     }
     public boolean deleteAssociatedPart(Part selectedAssociatedPart){
         return false;
     }
 
     public ObservableList<Part> getAllAssociatedParts(ObservableList<Part> allParts) {
-        return null;
+        return associatedParts;
     }
 
 }

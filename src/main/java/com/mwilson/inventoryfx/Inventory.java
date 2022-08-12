@@ -1,20 +1,18 @@
 package com.mwilson.inventoryfx;
 
 import javafx.collections.ObservableList;
+import javafx.collections.FXCollections;
 
 public class Inventory {
 
-    private static ObservableList<Part> allParts(ObservableList<Part> partList){
-        return null;
-    }
-    private static ObservableList<Product> allProducts(ObservableList<Part> productList){
-        return null;
-    }
-    public static void addPart(Part newPart){
+    private static ObservableList<Part> allParts = FXCollections.observableArrayList();
+    private static ObservableList<Product> allProducts = FXCollections.observableArrayList();
 
+    public static void addPart(Part newPart){
+        allParts.add(newPart);
     }
     public static void addProduct(Product newProduct){
-
+        allProducts.add(newProduct);
     }
     public static Part lookupPart(int partId){
         return null;
@@ -29,21 +27,21 @@ public class Inventory {
         return null;
     }
     public static void updatePart(int index, Part selectedPart){
-
+        allParts.set(index, selectedPart);
     }
     public static void updateProduct(int index, Product newProduct){
-
+        allProducts.set(index, newProduct);
     }
     public static boolean deletePart(Part selectedPart){
-        return false;
+        return allParts.remove(selectedPart);
     }
     public static boolean deleteProduct(Product selectedProduct){
-        return false;
+        return allProducts.remove(selectedProduct);
     }
     public static ObservableList<Part> getAllParts(){
-        return null;
+        return allParts;
     }
     public static ObservableList<Product> getAllProducts(){
-        return null;
+        return allProducts;
     }
 }
