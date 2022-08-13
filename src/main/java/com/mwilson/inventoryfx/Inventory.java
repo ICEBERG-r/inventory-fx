@@ -15,16 +15,59 @@ public class Inventory {
         allProducts.add(newProduct);
     }
     public static Part lookupPart(int partId){
-        return null;
+
+        ObservableList<Part> allParts = Inventory.getAllParts();
+
+        Part foundPart = null;
+
+        for (Part part : allParts) {
+
+            if(part.getId() == partId){
+                foundPart = part;
+            }
+        }
+        return foundPart;
     }
     public static Product lookupProduct(int productID){
-        return null;
+        ObservableList<Product> allProducts = Inventory.getAllProducts();
+
+        Product foundProduct = null;
+
+        for (Product product : allProducts) {
+
+            if(product.getId() == productID){
+                foundProduct = product;
+            }
+        }
+        return foundProduct;
     }
     public static ObservableList<Part> lookupPart(String partName){
-        return null;
+        ObservableList<Part> parts = FXCollections.observableArrayList();
+
+        ObservableList<Part> allParts = Inventory.getAllParts();
+
+        for (Part part : allParts) {
+
+            if(part.getName().contains(partName)){
+                parts.add(part);
+            }
+        }
+
+        return parts;
     }
     public static ObservableList<Product> lookupProduct(String productName){
-        return null;
+
+        ObservableList<Product> products = FXCollections.observableArrayList();
+
+        ObservableList<Product> allProducts = Inventory.getAllProducts();
+
+        for(Product product : allProducts){
+            if(product.getName().contains(productName)){
+                products.add(product);
+            }
+        }
+
+        return products;
     }
     public static void updatePart(int index, Part selectedPart){
         allParts.set(index, selectedPart);

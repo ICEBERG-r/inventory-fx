@@ -8,7 +8,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -28,8 +31,30 @@ public class AddProduct implements Initializable {
     public Button cancel;
     public TextField fieldSearch;
 
-    public void initialize(URL url, ResourceBundle resourceBundle){
+    public TableView<Part> allPartsTable;
+    public TableColumn<Object, Object> allPartIdColumn;
+    public TableColumn<Object, Object> allPartNameColumn;
+    public TableColumn<Object, Object> allPartInventoryColumn;
+    public TableColumn<Object, Object> allPartCostColumn;
+    public TableView<Part> associatedPartsTable;
+    public TableColumn<Object, Object> associatedPartIdColumn;
+    public TableColumn<Object, Object> associatedPartNameColumn;
+    public TableColumn<Object, Object> associatedPartInventoryColumn;
+    public TableColumn<Object, Object> associatedPartCostColumn;
 
+    private static ObservableList<Part> allParts = FXCollections.observableArrayList();
+    public void initialize(URL url, ResourceBundle resourceBundle){
+        allPartsTable.setItems(Inventory.getAllParts());
+
+        allPartIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        allPartNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        allPartInventoryColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        allPartCostColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+        associatedPartIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        associatedPartNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        associatedPartInventoryColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        associatedPartCostColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
     }
 
     public void OnAddButtonClicked(ActionEvent actionEvent) {
@@ -49,17 +74,14 @@ public class AddProduct implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-    private ObservableList<Product> searchByProductName(String partialName) {
-        ObservableList<Product> products = FXCollections.observableArrayList();
+    public void getPartSearchResults(ActionEvent actionEvent) {
+        String q = fieldSearch.getText();
 
-        ObservableList<Product> allProducts = Inventory.getAllProducts();
+        ObservableList<Part> parts = Inventory.lookupPart(q);
 
-        for (Product product : allProducts) {
-            if (product.getName().contains(partialName)) {
-                products.add(product);
-            }
-        }
+        allPartsTable.setItems(parts);
 
-        return products;
+        fieldSearch.setText("");
     }
+
 }

@@ -58,52 +58,34 @@ public class MainController implements Initializable {
     }
 
     public void getPartSearchResults(ActionEvent actionEvent) {
-            String q = partSearch.getText();
 
-            ObservableList<Part> parts = searchByPartName(q);
+        String q = partSearch.getText();
+        int x = Integer.parseInt(q);
+
+
+
+
+
+
+            ObservableList<Part> parts = Inventory.lookupPart(q);
 
             partTable.setItems(parts);
 
             partSearch.setText("");
     }
 
-    private ObservableList<Part> searchByPartName(String partialName){
-        ObservableList<Part> parts = FXCollections.observableArrayList();
 
-        ObservableList<Part> allParts = Inventory.getAllParts();
-
-        for(Part part : allParts){
-            if(part.getName().contains(partialName)){
-                parts.add(part);
-            }
-        }
-
-        return parts;
-    }
 
     public void getProductSearchResults(ActionEvent actionEvent){
         String q = productSearch.getText();
 
-        ObservableList<Product> products = searchByProductName(q);
+        ObservableList<Product> products = Inventory.lookupProduct(q);
 
         productTable.setItems(products);
 
         productSearch.setText("");
     }
 
-    private ObservableList<Product> searchByProductName(String partialName){
-        ObservableList<Product> products = FXCollections.observableArrayList();
-
-        ObservableList<Product> allProducts = Inventory.getAllProducts();
-
-        for(Product product : allProducts){
-            if(product.getName().contains(partialName)){
-                products.add(product);
-            }
-        }
-
-        return products;
-    }
     public void OnExitClicked(ActionEvent actionEvent) {
         System.exit(0);
         //exits the program
