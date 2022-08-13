@@ -1,5 +1,7 @@
 package com.mwilson.inventoryfx;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -46,5 +48,18 @@ public class AddProduct implements Initializable {
         stage.setTitle("Inventory Management System");
         stage.setScene(scene);
         stage.show();
+    }
+    private ObservableList<Product> searchByProductName(String partialName) {
+        ObservableList<Product> products = FXCollections.observableArrayList();
+
+        ObservableList<Product> allProducts = Inventory.getAllProducts();
+
+        for (Product product : allProducts) {
+            if (product.getName().contains(partialName)) {
+                products.add(product);
+            }
+        }
+
+        return products;
     }
 }

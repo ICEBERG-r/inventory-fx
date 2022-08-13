@@ -36,19 +36,14 @@ public class MainController implements Initializable {
     public TableColumn<Object, Object> productInventoryColumn;
     public TableColumn<Object, Object> productCostColumn;
 
-    private ObservableList<Part> allParts = FXCollections.observableArrayList();
-    private ObservableList<Product> allProducts = FXCollections.observableArrayList();
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        allParts.add(new InHouse(1, "whoozit", 23.00, 22, 1,50, 101 ));
-        allParts.add(new Outsourced(2, "noway", 12.00, 10, 5, 55, "Ballo"));
-        allProducts.add(new Product(1001, "product1", 55.00, 4, 2, 20));
-        allProducts.add(new Product(1002, "prod2", 44.00, 3,2,12));
 
-        partTable.setItems(allParts);
-        productTable.setItems(allProducts);
+        partTable.setItems(Inventory.getAllParts());
+        productTable.setItems(Inventory.getAllProducts());
 
         partIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         partNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -62,7 +57,53 @@ public class MainController implements Initializable {
 
     }
 
+    public void getPartSearchResults(ActionEvent actionEvent) {
+            String q = partSearch.getText();
 
+            ObservableList<Part> parts = searchByPartName(q);
+
+            partTable.setItems(parts);
+
+            partSearch.setText("");
+    }
+
+    private ObservableList<Part> searchByPartName(String partialName){
+        ObservableList<Part> parts = FXCollections.observableArrayList();
+
+        ObservableList<Part> allParts = Inventory.getAllParts();
+
+        for(Part part : allParts){
+            if(part.getName().contains(partialName)){
+                parts.add(part);
+            }
+        }
+
+        return parts;
+    }
+
+    public void getProductSearchResults(ActionEvent actionEvent){
+        String q = productSearch.getText();
+
+        ObservableList<Product> products = searchByProductName(q);
+
+        productTable.setItems(products);
+
+        productSearch.setText("");
+    }
+
+    private ObservableList<Product> searchByProductName(String partialName){
+        ObservableList<Product> products = FXCollections.observableArrayList();
+
+        ObservableList<Product> allProducts = Inventory.getAllProducts();
+
+        for(Product product : allProducts){
+            if(product.getName().contains(partialName)){
+                products.add(product);
+            }
+        }
+
+        return products;
+    }
     public void OnExitClicked(ActionEvent actionEvent) {
         System.exit(0);
         //exits the program
@@ -95,7 +136,7 @@ public class MainController implements Initializable {
         if (selectedPart == null){
             return;
         }
-        allParts.remove(selectedPart);
+        Inventory.deletePart(selectedPart);
     }
 
     public void OnAddProductClicked(ActionEvent actionEvent) throws IOException {
@@ -125,6 +166,7 @@ public class MainController implements Initializable {
             return;
         }
 
-        allProducts.remove(selectedProduct);
+        Inventory.deleteProduct(selectedProduct);
+
     }
 }
