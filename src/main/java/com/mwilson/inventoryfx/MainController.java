@@ -59,31 +59,47 @@ public class MainController implements Initializable {
 
     public void getPartSearchResults(ActionEvent actionEvent) {
 
-        String q = partSearch.getText();
-        int x = Integer.parseInt(q);
+        try {
+            int x = Integer.parseInt(partSearch.getText());
 
+            ObservableList<Part> part = Inventory.lookupPart(x);
 
+            partTable.setItems(part);
 
-
-
+            partSearch.setText("");
+        }
+        catch (Exception e) {
+            String q = partSearch.getText();
 
             ObservableList<Part> parts = Inventory.lookupPart(q);
 
             partTable.setItems(parts);
 
             partSearch.setText("");
+        }
     }
 
 
 
     public void getProductSearchResults(ActionEvent actionEvent){
-        String q = productSearch.getText();
+        try {
+            int x = Integer.parseInt(productSearch.getText());
 
-        ObservableList<Product> products = Inventory.lookupProduct(q);
+            ObservableList<Product> product = Inventory.lookupProduct(x);
 
-        productTable.setItems(products);
+            productTable.setItems(product);
 
-        productSearch.setText("");
+            productSearch.setText("");
+        }
+        catch (Exception e) {
+            String q = productSearch.getText();
+
+            ObservableList<Product> product = Inventory.lookupProduct(q);
+
+            productTable.setItems(product);
+
+            productSearch.setText("");
+        }
     }
 
     public void OnExitClicked(ActionEvent actionEvent) {

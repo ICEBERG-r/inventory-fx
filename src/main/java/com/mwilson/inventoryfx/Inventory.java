@@ -14,32 +14,30 @@ public class Inventory {
     public static void addProduct(Product newProduct){
         allProducts.add(newProduct);
     }
-    public static Part lookupPart(int partId){
+    public static ObservableList<Part> lookupPart(int partId){
 
         ObservableList<Part> allParts = Inventory.getAllParts();
+        ObservableList<Part> part = FXCollections.observableArrayList();
 
-        Part foundPart = null;
-
-        for (Part part : allParts) {
-
-            if(part.getId() == partId){
-                foundPart = part;
+        for (Part p : allParts){
+            if (p.getId() == partId){
+                part.add(p);
             }
         }
-        return foundPart;
+
+        return part;
     }
-    public static Product lookupProduct(int productID){
+    public static ObservableList<Product> lookupProduct(int productID){
         ObservableList<Product> allProducts = Inventory.getAllProducts();
+        ObservableList<Product> product = FXCollections.observableArrayList();
 
-        Product foundProduct = null;
-
-        for (Product product : allProducts) {
-
-            if(product.getId() == productID){
-                foundProduct = product;
+        for (Product p : allProducts){
+            if (p.getId() == productID){
+                product.add(p);
             }
         }
-        return foundProduct;
+
+        return product;
     }
     public static ObservableList<Part> lookupPart(String partName){
         ObservableList<Part> parts = FXCollections.observableArrayList();

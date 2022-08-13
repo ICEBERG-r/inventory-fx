@@ -1,6 +1,5 @@
 package com.mwilson.inventoryfx;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -42,9 +41,10 @@ public class AddProduct implements Initializable {
     public TableColumn<Object, Object> associatedPartInventoryColumn;
     public TableColumn<Object, Object> associatedPartCostColumn;
 
-    private static ObservableList<Part> allParts = FXCollections.observableArrayList();
+    private static ObservableList<Part> parts = Inventory.getAllParts();
     public void initialize(URL url, ResourceBundle resourceBundle){
-        allPartsTable.setItems(Inventory.getAllParts());
+
+        allPartsTable.setItems(parts);
 
         allPartIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         allPartNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -58,6 +58,7 @@ public class AddProduct implements Initializable {
     }
 
     public void OnAddButtonClicked(ActionEvent actionEvent) {
+        parts.remove(allPartsTable.getSelectionModel().getSelectedItem());
     }
 
     public void OnRemoveAssociatedPartClicked(ActionEvent actionEvent) {
@@ -75,13 +76,25 @@ public class AddProduct implements Initializable {
         stage.show();
     }
     public void getPartSearchResults(ActionEvent actionEvent) {
-        String q = fieldSearch.getText();
 
-        ObservableList<Part> parts = Inventory.lookupPart(q);
+        try {
+            int x = Integer.parseInt(fieldSearch.getText());
 
-        allPartsTable.setItems(parts);
+            ObservableList<Part> part = Inventory.lookupPart(x);
 
-        fieldSearch.setText("");
+            allPartsTable.setItems(part);
+
+            fieldSearch.setText("");
+        }
+        catch (Exception e) {
+            String q = fieldSearch.getText();
+
+            ObservableList<Part> parts = Inventory.lookupPart(q);
+
+            allPartsTable.setItems(parts);
+
+            fieldSearch.setText("");
+        }
     }
 
 }
