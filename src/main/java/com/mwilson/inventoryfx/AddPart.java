@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -20,24 +21,36 @@ public class AddPart implements Initializable {
     public TextField fieldInv;
     public TextField fieldCost;
     public TextField fieldMax;
-    public TextField fieldMachineId;
+    public TextField fieldMachineIdCompanyName;
     public TextField fieldMin;
     public RadioButton inHouseRadio;
     public RadioButton outsourcedRadio;
     public Button saveButton;
     public Button cancelButton;
+    public Label machineIdCompanyNameLabel;
 
     public void initialize(URL url, ResourceBundle resourceBundle){
 
     }
 
     public void InHouseSelected(ActionEvent actionEvent) {
+        machineIdCompanyNameLabel.setText("Machine ID");
     }
 
     public void OutsourcedSelected(ActionEvent actionEvent) {
+        machineIdCompanyNameLabel.setText("Company Name");
     }
 
     public void OnSaveClicked(ActionEvent actionEvent) {
+        if (inHouseRadio.isSelected()){
+
+        }
+        else if (outsourcedRadio.isSelected()) {
+
+        }
+        else {
+            System.out.println("You broke my radio!");
+        }
     }
 
     public void OnCancelClicked(ActionEvent actionEvent) throws IOException {
@@ -47,5 +60,13 @@ public class AddPart implements Initializable {
         stage.setTitle("Inventory Management System");
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void saveInHousePart(){
+
+    }
+
+    public void saveOutsourcedPart(){
+
     }
 }

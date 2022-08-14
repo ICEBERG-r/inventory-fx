@@ -60,6 +60,8 @@ public class Product {
         this.associatedParts.addAll(part);
     }
     public boolean deleteAssociatedPart(Part selectedAssociatedPart){
+
+        associatedParts.remove(selectedAssociatedPart);
         return false;
     }
 

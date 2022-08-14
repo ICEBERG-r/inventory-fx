@@ -1,5 +1,6 @@
 package com.mwilson.inventoryfx;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -41,10 +42,15 @@ public class AddProduct implements Initializable {
     public TableColumn<Object, Object> associatedPartInventoryColumn;
     public TableColumn<Object, Object> associatedPartCostColumn;
 
-    private static ObservableList<Part> parts = Inventory.getAllParts();
+    private static ObservableList<Part> allParts = FXCollections.observableArrayList();
+    private static ObservableList<Part> associatedParts = FXCollections.observableArrayList();
+
     public void initialize(URL url, ResourceBundle resourceBundle){
 
-        allPartsTable.setItems(parts);
+        allParts.setAll(Inventory.getAllParts());
+        allPartsTable.setItems(allParts);
+
+        associatedPartsTable.setItems(associatedParts);
 
         allPartIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         allPartNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -58,10 +64,26 @@ public class AddProduct implements Initializable {
     }
 
     public void OnAddButtonClicked(ActionEvent actionEvent) {
-        parts.remove(allPartsTable.getSelectionModel().getSelectedItem());
+        Part part = allPartsTable.getSelectionModel().getSelectedItem();
+
+        if (part == null){
+            return;
+        }
+
+        allParts.remove(part);
+        associatedParts.add(part);
+
     }
 
     public void OnRemoveAssociatedPartClicked(ActionEvent actionEvent) {
+        Part part = associatedPartsTable.getSelectionModel().getSelectedItem();
+
+        if (part == null){
+            return;
+        }
+
+        associatedParts.remove(part);
+        allParts.add(part);
     }
 
     public void OnSaveClicked(ActionEvent actionEvent) {
@@ -75,7 +97,7 @@ public class AddProduct implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-    public void getPartSearchResults(ActionEvent actionEvent) {
+    public void GetPartSearchResults(ActionEvent actionEvent) {
 
         try {
             int x = Integer.parseInt(fieldSearch.getText());
