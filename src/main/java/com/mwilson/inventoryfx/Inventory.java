@@ -77,7 +77,8 @@ public class Inventory {
         return allParts.remove(selectedPart);
     }
     public static boolean deleteProduct(Product selectedProduct){
-        return allProducts.remove(selectedProduct);
+        allProducts.remove(selectedProduct);
+        return true;
     }
     public static ObservableList<Part> getAllParts(){
         return allParts;

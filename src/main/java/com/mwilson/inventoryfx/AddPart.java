@@ -53,6 +53,7 @@ public class AddPart implements Initializable {
         for (int i = 0; i < Inventory.getAllParts().size(); i++){
             id++;
         }
+        id = id + 9000;
         return id;
 
     }

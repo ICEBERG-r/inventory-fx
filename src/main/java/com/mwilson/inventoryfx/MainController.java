@@ -1,6 +1,5 @@
 package com.mwilson.inventoryfx;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +12,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
@@ -142,9 +142,13 @@ public class MainController implements Initializable {
     }
 
     public void OnExitClicked(ActionEvent actionEvent) {
-        System.exit(0);
-        //exits the program
-        //needs confirmation dialog
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Exit");
+        alert.setHeaderText("Are you sure you want to exit?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get().equals(ButtonType.OK)){
+            System.exit(0);
+        }
     }
 
     public void OnAddPartClicked(ActionEvent actionEvent) throws IOException {
@@ -171,6 +175,11 @@ public class MainController implements Initializable {
         //needs confirmation dialog prompt
         Part selectedPart = partTable.getSelectionModel().getSelectedItem();
         if (selectedPart == null){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("ERROR");
+            alert.setHeaderText("Part not selected");
+            alert.setContentText("A part must be selected in order to delete it");
+            alert.showAndWait();
             return;
         }
         Inventory.deletePart(selectedPart);
@@ -200,10 +209,25 @@ public class MainController implements Initializable {
         //needs confirmation dialog prompt
         Product selectedProduct = productTable.getSelectionModel().getSelectedItem();
         if (selectedProduct == null){
-            return;
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("ERROR");
+            alert.setHeaderText("Product not selected");
+            alert.setContentText("A product must be selected in order to delete it");
+            alert.showAndWait();
+        }
+        else if (!selectedProduct.getAllAssociatedParts().isEmpty())
+        {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("ERROR");
+            alert.setHeaderText("Product has associated parts");
+            alert.setContentText("A product cannot be deleted if it has associated parts");
+            alert.showAndWait();
+        }
+        else {
+            Inventory.deleteProduct(selectedProduct);
         }
 
-        Inventory.deleteProduct(selectedProduct);
+
 
     }
 }

@@ -45,15 +45,7 @@ public class ModifyPart implements Initializable {
     }
 
     public void OnSaveClicked(ActionEvent actionEvent) {
-        if (inHouseRadio.isSelected()){
 
-        }
-        else if (outsourcedRadio.isSelected()) {
-
-        }
-        else {
-            System.out.println("You broke my radio!");
-        }
     }
 
     public void OnCancelClicked(ActionEvent actionEvent) throws IOException {

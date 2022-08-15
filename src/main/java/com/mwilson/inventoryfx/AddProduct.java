@@ -82,8 +82,54 @@ public class AddProduct implements Initializable {
         associatedParts.remove(part);
         allParts.add(part);
     }
+    public static int getNewID(){
+        int id = 1;
+        for (int i = 0; i < Inventory.getAllProducts().size(); i++){
+            id++;
+        }
+        return id;
 
+    }
     public void OnSaveClicked(ActionEvent actionEvent) {
+        try {
+            int inventory = Integer.parseInt(fieldInv.getText());
+            int min = Integer.parseInt(fieldMin.getText());
+            int max = Integer.parseInt(fieldMax.getText());
+            if (max < min){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Error!");
+                alert.setHeaderText("Input Error!");
+                alert.setContentText("Product minimum must be less than maximum");
+                alert.showAndWait();
+            }
+            else if (inventory < min || inventory > max){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Error!");
+                alert.setHeaderText("Input Error!");
+                alert.setContentText("Product inventory must be between minimum and maximum");
+                alert.showAndWait();
+            }
+            else {
+                int id = getNewID();
+                String name = fieldName.getText();
+                double price = Double.parseDouble(fieldCost.getText());
+                Product product = new Product(id,name,price,inventory,min,max);
+                Inventory.addProduct(product);
+                Parent root = FXMLLoader.load(getClass().getResource("MainWindow.fxml"));
+                Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root);
+                stage.setTitle("Inventory Management System");
+                stage.setScene(scene);
+                stage.show();
+
+            }
+        } catch (Exception e){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error!");
+            alert.setHeaderText("Input Error!");
+            alert.setContentText("Inventory, Price, Min and Max fields must contain numerical values");
+            alert.showAndWait();
+        }
     }
 
     public void OnCancelClicked(ActionEvent actionEvent) throws IOException {
