@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -22,10 +23,11 @@ public class ModifyPart implements Initializable {
     public TextField fieldMax;
     public TextField fieldMachineId;
     public TextField fieldMin;
-    public RadioButton inHouse;
-    public RadioButton outsourced;
+    public RadioButton inHouseRadio;
+    public RadioButton outsourcedRadio;
     public Button save;
     public Button cancel;
+    public Label machineIdCompanyNameLabel;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -33,12 +35,25 @@ public class ModifyPart implements Initializable {
     }
 
     public void InHouseSelected(ActionEvent actionEvent) {
+        machineIdCompanyNameLabel.setText("Machine ID");
+
     }
 
     public void OutsourcedSelected(ActionEvent actionEvent) {
+        machineIdCompanyNameLabel.setText("Company Name");
+
     }
 
     public void OnSaveClicked(ActionEvent actionEvent) {
+        if (inHouseRadio.isSelected()){
+
+        }
+        else if (outsourcedRadio.isSelected()) {
+
+        }
+        else {
+            System.out.println("You broke my radio!");
+        }
     }
 
     public void OnCancelClicked(ActionEvent actionEvent) throws IOException {

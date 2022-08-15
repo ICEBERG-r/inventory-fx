@@ -7,10 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -104,6 +101,16 @@ public class AddProduct implements Initializable {
 
             ObservableList<Part> part = Inventory.lookupPart(x);
 
+            if (part.isEmpty()){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Product not found");
+                alert.setHeaderText("Product not found");
+                alert.setContentText("Search term returned no results");
+                alert.showAndWait();
+                fieldSearch.setText("");
+                return;
+            }
+
             allPartsTable.setItems(part);
 
             fieldSearch.setText("");
@@ -111,9 +118,19 @@ public class AddProduct implements Initializable {
         catch (Exception e) {
             String q = fieldSearch.getText();
 
-            ObservableList<Part> parts = Inventory.lookupPart(q);
+            ObservableList<Part> part = Inventory.lookupPart(q);
 
-            allPartsTable.setItems(parts);
+            if (part.isEmpty()){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Product not found");
+                alert.setHeaderText("Product not found");
+                alert.setContentText("Search term returned no results");
+                alert.showAndWait();
+                fieldSearch.setText("");
+                return;
+            }
+
+            allPartsTable.setItems(part);
 
             fieldSearch.setText("");
         }

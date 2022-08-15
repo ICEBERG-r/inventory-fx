@@ -70,8 +70,8 @@ public class Inventory {
     public static void updatePart(int index, Part selectedPart){
         allParts.set(index, selectedPart);
     }
-    public static void updateProduct(int index, Product newProduct){
-        allProducts.set(index, newProduct);
+    public static void updateProduct(int index, Product selectedProduct){
+        allProducts.set(index, selectedProduct);
     }
     public static boolean deletePart(Part selectedPart){
         return allParts.remove(selectedPart);

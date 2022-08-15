@@ -64,6 +64,16 @@ public class MainController implements Initializable {
 
             ObservableList<Part> part = Inventory.lookupPart(x);
 
+            if (part.isEmpty()){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Part not found");
+                alert.setHeaderText("Part not found");
+                alert.setContentText("Search term returned no results");
+                alert.showAndWait();
+                partSearch.setText("");
+                return;
+            }
+
             partTable.setItems(part);
 
             partSearch.setText("");
@@ -71,9 +81,19 @@ public class MainController implements Initializable {
         catch (Exception e) {
             String q = partSearch.getText();
 
-            ObservableList<Part> parts = Inventory.lookupPart(q);
+            ObservableList<Part> part = Inventory.lookupPart(q);
 
-            partTable.setItems(parts);
+            if (part.isEmpty()){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Part not found");
+                alert.setHeaderText("Part not found");
+                alert.setContentText("Search term returned no results");
+                alert.showAndWait();
+                partSearch.setText("");
+                return;
+            }
+
+            partTable.setItems(part);
 
             partSearch.setText("");
         }
@@ -87,6 +107,15 @@ public class MainController implements Initializable {
 
             ObservableList<Product> product = Inventory.lookupProduct(x);
 
+            if (product.isEmpty()){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Product not found");
+                alert.setHeaderText("Product not found");
+                alert.setContentText("Search term returned no results");
+                alert.showAndWait();
+                productSearch.setText("");
+                return;
+            }
             productTable.setItems(product);
 
             productSearch.setText("");
@@ -95,6 +124,16 @@ public class MainController implements Initializable {
             String q = productSearch.getText();
 
             ObservableList<Product> product = Inventory.lookupProduct(q);
+
+            if (product.isEmpty()){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Product not found");
+                alert.setHeaderText("Product not found");
+                alert.setContentText("Search term returned no results");
+                alert.showAndWait();
+                productSearch.setText("");
+                return;
+            }
 
             productTable.setItems(product);
 
