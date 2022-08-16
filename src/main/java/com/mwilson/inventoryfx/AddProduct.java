@@ -64,6 +64,7 @@ public class AddProduct implements Initializable {
         Part part = allPartsTable.getSelectionModel().getSelectedItem();
 
         if (part == null){
+            MainController.displayInfoAlert("ERROR", "Part must be selected");
             return;
         }
 
@@ -76,6 +77,7 @@ public class AddProduct implements Initializable {
         Part part = associatedPartsTable.getSelectionModel().getSelectedItem();
 
         if (part == null){
+            MainController.displayInfoAlert("ERROR", "Part must be selected");
             return;
         }
 
@@ -96,18 +98,10 @@ public class AddProduct implements Initializable {
             int min = Integer.parseInt(fieldMin.getText());
             int max = Integer.parseInt(fieldMax.getText());
             if (max < min){
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Error!");
-                alert.setHeaderText("Input Error!");
-                alert.setContentText("Product minimum must be less than maximum");
-                alert.showAndWait();
+                MainController.displayInfoAlert("Input Error","Product minimum must be less than maximum");
             }
             else if (inventory < min || inventory > max){
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Error!");
-                alert.setHeaderText("Input Error!");
-                alert.setContentText("Product inventory must be between minimum and maximum");
-                alert.showAndWait();
+                MainController.displayInfoAlert("Input Error","Product inventory must be between minimum and maximum");
             }
             else {
                 int id = getNewID();
@@ -124,11 +118,7 @@ public class AddProduct implements Initializable {
 
             }
         } catch (Exception e){
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Error!");
-            alert.setHeaderText("Input Error!");
-            alert.setContentText("Inventory, Price, Min and Max fields must contain numerical values");
-            alert.showAndWait();
+            MainController.displayInfoAlert("Input Error","Inventory, Price, Min and Max fields must contain numerical values");
         }
     }
 
@@ -148,11 +138,7 @@ public class AddProduct implements Initializable {
             ObservableList<Part> part = Inventory.lookupPart(x);
 
             if (part.isEmpty()){
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Product not found");
-                alert.setHeaderText("Product not found");
-                alert.setContentText("Search term returned no results");
-                alert.showAndWait();
+                MainController.displayInfoAlert("Product not found","Search term returned no results");
                 fieldSearch.setText("");
                 return;
             }
@@ -167,11 +153,7 @@ public class AddProduct implements Initializable {
             ObservableList<Part> part = Inventory.lookupPart(q);
 
             if (part.isEmpty()){
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Product not found");
-                alert.setHeaderText("Product not found");
-                alert.setContentText("Search term returned no results");
-                alert.showAndWait();
+                MainController.displayInfoAlert("Product not found","Search term returned no results");
                 fieldSearch.setText("");
                 return;
             }

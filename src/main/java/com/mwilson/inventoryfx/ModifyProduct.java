@@ -102,11 +102,7 @@ public class ModifyProduct implements Initializable {
             ObservableList<Part> part = Inventory.lookupPart(x);
 
             if (part.isEmpty()){
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Product not found");
-                alert.setHeaderText("Product not found");
-                alert.setContentText("Search term returned no results");
-                alert.showAndWait();
+                MainController.displayInfoAlert("Product not found", "Search term returned no results");
                 fieldSearch.setText("");
                 return;
             }
@@ -121,11 +117,7 @@ public class ModifyProduct implements Initializable {
             ObservableList<Part> part = Inventory.lookupPart(q);
 
             if (part.isEmpty()){
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Product not found");
-                alert.setHeaderText("Product not found");
-                alert.setContentText("Search term returned no results");
-                alert.showAndWait();
+                MainController.displayInfoAlert("Product not found", "Search term returned no results");
                 fieldSearch.setText("");
                 return;
             }

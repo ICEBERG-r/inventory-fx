@@ -26,6 +26,7 @@ public class AddPart implements Initializable {
     public Button saveButton;
     public Button cancelButton;
     public Label machineIdCompanyNameLabel;
+    public ToggleGroup tparts;
 
     public void initialize(URL url, ResourceBundle resourceBundle){
 
@@ -64,18 +65,10 @@ public class AddPart implements Initializable {
             int min = Integer.parseInt(fieldMin.getText());
             int max = Integer.parseInt(fieldMax.getText());
             if (max < min){
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Error!");
-                alert.setHeaderText("Input Error!");
-                alert.setContentText("Part minimum must be less than maximum");
-                alert.showAndWait();
+                MainController.displayInfoAlert("Input Error","Part minimum must be less than maximum");
             }
             else if (inventory < min || inventory > max){
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Error!");
-                alert.setHeaderText("Input Error!");
-                alert.setContentText("Part inventory must be between minimum and maximum");
-                alert.showAndWait();
+                MainController.displayInfoAlert("Input Error","Part inventory must be between minimum and maximum");
             }
             else {
                 int id = getNewID();
@@ -100,11 +93,7 @@ public class AddPart implements Initializable {
 
             }
         } catch (Exception e){
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Error!");
-            alert.setHeaderText("Input Error!");
-            alert.setContentText("Inventory, Cost, Min, Max, and Machine ID fields must contain numerical values");
-            alert.showAndWait();
+            MainController.displayInfoAlert("Input Error","Inventory, Cost, Min, Max, and Machine ID fields must contain numerical values");
         }
 
     }

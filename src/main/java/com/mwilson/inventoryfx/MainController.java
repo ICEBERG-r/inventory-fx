@@ -37,7 +37,6 @@ public class MainController implements Initializable {
     public TableColumn<Object, Object> productCostColumn;
 
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -55,6 +54,7 @@ public class MainController implements Initializable {
         productInventoryColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
         productCostColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
 
+
     }
 
     public void getPartSearchResults(ActionEvent actionEvent) {
@@ -65,11 +65,7 @@ public class MainController implements Initializable {
             ObservableList<Part> part = Inventory.lookupPart(x);
 
             if (part.isEmpty()){
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Part not found");
-                alert.setHeaderText("Part not found");
-                alert.setContentText("Search term returned no results");
-                alert.showAndWait();
+                displayInfoAlert("Part not found", "Search term returned no results");
                 partSearch.setText("");
                 return;
             }
@@ -84,11 +80,7 @@ public class MainController implements Initializable {
             ObservableList<Part> part = Inventory.lookupPart(q);
 
             if (part.isEmpty()){
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Part not found");
-                alert.setHeaderText("Part not found");
-                alert.setContentText("Search term returned no results");
-                alert.showAndWait();
+                displayInfoAlert("Part not found", "Search term returned no results");
                 partSearch.setText("");
                 return;
             }
@@ -108,11 +100,8 @@ public class MainController implements Initializable {
             ObservableList<Product> product = Inventory.lookupProduct(x);
 
             if (product.isEmpty()){
+                displayInfoAlert("Product not found", "Search term returned no results");
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Product not found");
-                alert.setHeaderText("Product not found");
-                alert.setContentText("Search term returned no results");
-                alert.showAndWait();
                 productSearch.setText("");
                 return;
             }
@@ -126,11 +115,7 @@ public class MainController implements Initializable {
             ObservableList<Product> product = Inventory.lookupProduct(q);
 
             if (product.isEmpty()){
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Product not found");
-                alert.setHeaderText("Product not found");
-                alert.setContentText("Search term returned no results");
-                alert.showAndWait();
+                displayInfoAlert("Product not found", "Search term returned no results");
                 productSearch.setText("");
                 return;
             }
@@ -163,6 +148,7 @@ public class MainController implements Initializable {
 
     public void OnModifyPartClicked(ActionEvent actionEvent) throws IOException {
         //loads Modify Part scene
+        ModifyPart.selectedPart = partTable.getSelectionModel().getSelectedItem();
         Parent root = FXMLLoader.load(getClass().getResource("ModifyPart.fxml"));
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
@@ -172,14 +158,9 @@ public class MainController implements Initializable {
     }
 
     public void OnDeletePartClicked(ActionEvent actionEvent) {
-        //needs confirmation dialog prompt
         Part selectedPart = partTable.getSelectionModel().getSelectedItem();
         if (selectedPart == null){
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("ERROR");
-            alert.setHeaderText("Part not selected");
-            alert.setContentText("A part must be selected in order to delete it");
-            alert.showAndWait();
+            displayInfoAlert("ERROR", "A part must be selected in order to delete it");
             return;
         }
         Inventory.deletePart(selectedPart);
@@ -209,19 +190,11 @@ public class MainController implements Initializable {
         //needs confirmation dialog prompt
         Product selectedProduct = productTable.getSelectionModel().getSelectedItem();
         if (selectedProduct == null){
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("ERROR");
-            alert.setHeaderText("Product not selected");
-            alert.setContentText("A product must be selected in order to delete it");
-            alert.showAndWait();
+            displayInfoAlert("ERROR", "A product must be selected in order to delete it");
         }
         else if (!selectedProduct.getAllAssociatedParts().isEmpty())
         {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("ERROR");
-            alert.setHeaderText("Product has associated parts");
-            alert.setContentText("A product cannot be deleted if it has associated parts");
-            alert.showAndWait();
+            displayInfoAlert("ERROR","A product cannot be deleted if it has associated parts");
         }
         else {
             Inventory.deleteProduct(selectedProduct);
@@ -229,5 +202,12 @@ public class MainController implements Initializable {
 
 
 
+    }
+    public static void displayInfoAlert(String title, String elaboration){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(title);
+        alert.setContentText(elaboration);
+        alert.showAndWait();
     }
 }
