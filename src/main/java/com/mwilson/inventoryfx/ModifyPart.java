@@ -33,9 +33,9 @@ public class ModifyPart implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        setParts(selectedPart);
+        setPart(selectedPart);
     }
-    public void setParts(Part selectedPart) {
+    public void setPart(Part selectedPart) {
         partIndex = Inventory.getAllParts().indexOf(selectedPart);
         fieldID.setText(Integer.toString(selectedPart.getId()));
         fieldName.setText(selectedPart.getName());
@@ -87,7 +87,7 @@ public class ModifyPart implements Initializable {
                 }
                 else {
                     String coName = fieldMachineId.getText();
-                    Outsourced outsourced = new Outsourced(id, name, price, inventory, min, max, coName);
+                    Outsourced outsourced = new Outsourced(id,name,price,inventory,min,max,coName);
                     Inventory.updatePart(partIndex, outsourced);
                 }
                 Parent root = FXMLLoader.load(getClass().getResource("MainWindow.fxml"));

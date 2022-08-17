@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ModifyProduct implements Initializable {
@@ -38,12 +39,14 @@ public class ModifyProduct implements Initializable {
     public TableColumn<Object, Object> associatedPartInventoryColumn;
     public TableColumn<Object, Object> associatedPartCostColumn;
 
-    public Product selectedProduct;
+    public static Product selectedProduct;
+    private int productIndex;
 
     private static ObservableList<Part> allParts = FXCollections.observableArrayList();
     private static ObservableList<Part> associatedParts = FXCollections.observableArrayList();
 
     public void initialize(URL url, ResourceBundle resourceBundle){
+        setProduct(selectedProduct);
         allParts.setAll(Inventory.getAllParts());
         allPartsTable.setItems(allParts);
 
@@ -60,11 +63,20 @@ public class ModifyProduct implements Initializable {
         associatedPartCostColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
     }
 
+    public void setProduct(Product selectedProduct){
+        productIndex = Inventory.getAllProducts().indexOf(selectedProduct);
+        fieldID.setText(Integer.toString(selectedProduct.getId()));
+        fieldName.setText(selectedProduct.getName());
+        fieldInv.setText(Integer.toString(selectedProduct.getStock()));
+        fieldCost.setText(Double.toString(selectedProduct.getPrice()));
+        fieldMax.setText(Integer.toString(selectedProduct.getMax()));
+        fieldMin.setText(Integer.toString(selectedProduct.getMin()));
+    }
     public void OnAddButtonClicked(ActionEvent actionEvent) {
         Part part = allPartsTable.getSelectionModel().getSelectedItem();
 
         if (part == null){
-            return;
+            MainController.displayInfoAlert("Error","A part must be selected before association");
         }
 
         allParts.remove(part);
@@ -75,14 +87,57 @@ public class ModifyProduct implements Initializable {
         Part part = associatedPartsTable.getSelectionModel().getSelectedItem();
 
         if (part == null){
-            return;
+            MainController.displayInfoAlert("Error","A part must be selected before removal");
+        }
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Remove part?");
+        alert.setHeaderText("Are you sure you want to remove this part?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get().equals(ButtonType.OK)){
+            selectedProduct.deleteAssociatedPart(part);
+            associatedParts.remove(part);
+            allParts.add(part);
         }
 
-        associatedParts.remove(part);
-        allParts.add(part);
     }
 
     public void OnSaveClicked(ActionEvent actionEvent) {
+        try {
+            int inventory = Integer.parseInt(fieldInv.getText());
+            int min = Integer.parseInt(fieldMin.getText());
+            int max = Integer.parseInt(fieldMax.getText());
+            if (max < min){
+                MainController.displayInfoAlert("Input Error","Part minimum must be less than maximum");
+            }
+            else if (inventory < min || inventory > max){
+                MainController.displayInfoAlert("Input Error","Part inventory must be between minimum and maximum");
+            }
+            else {
+                int id = Integer.parseInt(fieldID.getText());
+                String name = fieldName.getText();
+                double price = Double.parseDouble(fieldCost.getText());
+                selectedProduct.setID(id);
+                selectedProduct.setStock(inventory);
+                selectedProduct.setMin(min);
+                selectedProduct.setMax(max);
+                selectedProduct.setName(name);
+                selectedProduct.setPrice(price);
+                selectedProduct.getAllAssociatedParts().clear();
+                selectedProduct.addAssociatedPart(associatedParts);
+                Inventory.updateProduct(productIndex, selectedProduct);
+
+                Parent root = FXMLLoader.load(getClass().getResource("MainWindow.fxml"));
+                Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root);
+                stage.setTitle("Inventory Management System");
+                stage.setScene(scene);
+                stage.show();
+
+            }
+        } catch (Exception e){
+            MainController.displayInfoAlert("Input Error","Inventory, Cost, Min, Max, and Machine ID fields must contain numerical values");
+        }
+
 
     }
 

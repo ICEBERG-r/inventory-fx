@@ -163,7 +163,13 @@ public class MainController implements Initializable {
             displayInfoAlert("ERROR", "A part must be selected in order to delete it");
             return;
         }
-        Inventory.deletePart(selectedPart);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Delete Part?");
+        alert.setHeaderText("Are you sure you want to delete this part?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get().equals(ButtonType.OK)){
+            Inventory.deletePart(selectedPart);
+        }
     }
 
     public void OnAddProductClicked(ActionEvent actionEvent) throws IOException {
@@ -178,6 +184,7 @@ public class MainController implements Initializable {
 
     public void OnModifyProductClicked(ActionEvent actionEvent) throws IOException {
         //loads ModifyProduct scene
+        ModifyProduct.selectedProduct = productTable.getSelectionModel().getSelectedItem();
         Parent root = FXMLLoader.load(getClass().getResource("ModifyProduct.fxml"));
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
@@ -197,7 +204,14 @@ public class MainController implements Initializable {
             displayInfoAlert("ERROR","A product cannot be deleted if it has associated parts");
         }
         else {
-            Inventory.deleteProduct(selectedProduct);
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Delete Product");
+            alert.setHeaderText("Are you sure you want to delete this product?");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get().equals(ButtonType.OK)){
+                Inventory.deleteProduct(selectedProduct);
+            }
+
         }
 
 

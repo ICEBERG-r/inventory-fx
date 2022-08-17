@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AddProduct implements Initializable {
@@ -81,8 +82,15 @@ public class AddProduct implements Initializable {
             return;
         }
 
-        associatedParts.remove(part);
-        allParts.add(part);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Remove Part?");
+        alert.setHeaderText("Are you sure you want remove this part?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get().equals(ButtonType.OK)){
+            associatedParts.remove(part);
+            allParts.add(part);
+        }
+
     }
     public static int getNewID(){
         int id = 1;
@@ -108,6 +116,7 @@ public class AddProduct implements Initializable {
                 String name = fieldName.getText();
                 double price = Double.parseDouble(fieldCost.getText());
                 Product product = new Product(id,name,price,inventory,min,max);
+                product.addAssociatedPart(associatedParts);
                 Inventory.addProduct(product);
                 Parent root = FXMLLoader.load(getClass().getResource("MainWindow.fxml"));
                 Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
