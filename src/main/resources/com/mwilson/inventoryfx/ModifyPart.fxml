@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mwilson.inventoryfx.ModifyPart">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mwilson.inventoryfx.ModifyPartController">
     <children>
         <Label layoutX="64.0" layoutY="43.0" text="Add Part">
             <font>
@@ -17,19 +17,19 @@
         </Label>
         <RadioButton fx:id="inHouseRadio" layoutX="180.0" layoutY="45.0" mnemonicParsing="false" onAction="#InHouseSelected" text="In-House">
          <toggleGroup>
-            <ToggleGroup fx:id="tgroup" />
+            <ToggleGroup fx:id="toggleGroup" />
          </toggleGroup></RadioButton>
-        <RadioButton fx:id="outsourcedRadio" layoutX="351.0" layoutY="45.0" mnemonicParsing="false" onAction="#OutsourcedSelected" text="Outsourced" toggleGroup="$tgroup" />
-        <Button fx:id="save" layoutX="464.0" layoutY="353.0" mnemonicParsing="false" onAction="#OnSaveClicked" text="Save" />
-        <Button fx:id="cancel" layoutX="526.0" layoutY="353.0" mnemonicParsing="false" onAction="#OnCancelClicked" text="Cancel" />
-        <TextField fx:id="fieldID" editable="false" layoutX="141.0" layoutY="111.0" text="Auto Generated" />
+        <RadioButton fx:id="outsourcedRadio" layoutX="351.0" layoutY="45.0" mnemonicParsing="false" onAction="#OutsourcedSelected" text="Outsourced" toggleGroup="$toggleGroup" />
+        <Button fx:id="saveButton" layoutX="464.0" layoutY="353.0" mnemonicParsing="false" onAction="#OnSaveClicked" text="Save" />
+        <Button fx:id="cancelButton" layoutX="526.0" layoutY="353.0" mnemonicParsing="false" onAction="#OnCancelClicked" text="Cancel" />
+        <TextField fx:id="idField" editable="false" layoutX="141.0" layoutY="111.0" text="Auto Generated" />
         <Label layoutX="91.0" layoutY="116.0" text="ID" />
-        <TextField fx:id="fieldName" layoutX="141.0" layoutY="146.0" />
-        <TextField fx:id="fieldInv" layoutX="141.0" layoutY="182.0" />
-        <TextField fx:id="fieldCost" layoutX="141.0" layoutY="223.0" />
-        <TextField fx:id="fieldMax" layoutX="141.0" layoutY="262.0" />
-        <TextField fx:id="fieldMachineId" layoutX="141.0" layoutY="300.0" />
-        <TextField fx:id="fieldMin" layoutX="390.0" layoutY="262.0" />
+        <TextField fx:id="nameField" layoutX="141.0" layoutY="146.0" />
+        <TextField fx:id="invField" layoutX="141.0" layoutY="182.0" />
+        <TextField fx:id="priceField" layoutX="141.0" layoutY="223.0" />
+        <TextField fx:id="maxField" layoutX="141.0" layoutY="262.0" />
+        <TextField fx:id="machineIdCompanyNameField" layoutX="141.0" layoutY="300.0" />
+        <TextField fx:id="minField" layoutX="390.0" layoutY="262.0" />
         <Label layoutX="80.0" layoutY="151.0" text="Name" />
         <Label layoutX="88.0" layoutY="187.0" text="Inv" />
         <Label layoutX="83.0" layoutY="228.0" text="Cost" />

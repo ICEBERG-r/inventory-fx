@@ -16,18 +16,18 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class AddProduct implements Initializable {
-    public TextField fieldID;
-    public TextField fieldName;
-    public TextField fieldInv;
-    public TextField fieldCost;
-    public TextField fieldMax;
-    public TextField fieldMin;
-    public Button add;
-    public Button removeAssociatedPart;
-    public Button save;
-    public Button cancel;
-    public TextField fieldSearch;
+public class AddProductController implements Initializable {
+    public TextField idField;
+    public TextField nameField;
+    public TextField invField;
+    public TextField priceField;
+    public TextField maxField;
+    public TextField minField;
+    public Button addButton;
+    public Button removeAssociatedPartButton;
+    public Button saveButton;
+    public Button cancelButton;
+    public TextField searchField;
 
     public TableView<Part> allPartsTable;
     public TableColumn<Object, Object> allPartIdColumn;
@@ -102,20 +102,24 @@ public class AddProduct implements Initializable {
     }
     public void OnSaveClicked(ActionEvent actionEvent) {
         try {
-            int inventory = Integer.parseInt(fieldInv.getText());
-            int min = Integer.parseInt(fieldMin.getText());
-            int max = Integer.parseInt(fieldMax.getText());
+            int inv = Integer.parseInt(invField.getText());
+            int min = Integer.parseInt(minField.getText());
+            int max = Integer.parseInt(maxField.getText());
             if (max < min){
                 MainController.displayInfoAlert("Input Error","Product minimum must be less than maximum");
             }
-            else if (inventory < min || inventory > max){
+            else if (inv < min || inv > max){
                 MainController.displayInfoAlert("Input Error","Product inventory must be between minimum and maximum");
             }
             else {
                 int id = getNewID();
-                String name = fieldName.getText();
-                double price = Double.parseDouble(fieldCost.getText());
-                Product product = new Product(id,name,price,inventory,min,max);
+                String name = nameField.getText();
+                if (name.equals("")) {
+                    MainController.displayInfoAlert("Input Error", "Product name cannot be blank");
+                    return;
+                }
+                double price = Double.parseDouble(priceField.getText());
+                Product product = new Product(id,name,price,inv,min,max);
                 product.addAssociatedPart(associatedParts);
                 Inventory.addProduct(product);
                 Parent root = FXMLLoader.load(getClass().getResource("MainWindow.fxml"));
@@ -142,34 +146,34 @@ public class AddProduct implements Initializable {
     public void GetPartSearchResults(ActionEvent actionEvent) {
 
         try {
-            int x = Integer.parseInt(fieldSearch.getText());
+            int x = Integer.parseInt(searchField.getText());
 
             ObservableList<Part> part = Inventory.lookupPart(x);
 
             if (part.isEmpty()){
                 MainController.displayInfoAlert("Product not found","Search term returned no results");
-                fieldSearch.setText("");
+                searchField.setText("");
                 return;
             }
 
             allPartsTable.setItems(part);
 
-            fieldSearch.setText("");
+            searchField.setText("");
         }
         catch (Exception e) {
-            String q = fieldSearch.getText();
+            String q = searchField.getText();
 
             ObservableList<Part> part = Inventory.lookupPart(q);
 
             if (part.isEmpty()){
                 MainController.displayInfoAlert("Product not found","Search term returned no results");
-                fieldSearch.setText("");
+                searchField.setText("");
                 return;
             }
 
             allPartsTable.setItems(part);
 
-            fieldSearch.setText("");
+            searchField.setText("");
         }
     }
 

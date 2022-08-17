@@ -17,14 +17,14 @@ import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
 
-    public Button addPart;
-    public Button modifyPart;
-    public Button deletePart;
-    public Button addProduct;
-    public Button modifyProduct;
-    public Button deleteProduct;
-    public TextField partSearch;
-    public TextField productSearch;
+    public Button addPartButton;
+    public Button modifyPartButton;
+    public Button deletePartButton;
+    public Button addProductButton;
+    public Button modifyProductButton;
+    public Button deleteProductButton;
+    public TextField partSearchButton;
+    public TextField productSearchButton;
     public TableView<Part> partTable;
     public TableColumn<Object, Object> partIdColumn;
     public TableColumn<Object, Object> partNameColumn;
@@ -60,34 +60,34 @@ public class MainController implements Initializable {
     public void getPartSearchResults(ActionEvent actionEvent) {
 
         try {
-            int x = Integer.parseInt(partSearch.getText());
+            int x = Integer.parseInt(partSearchButton.getText());
 
             ObservableList<Part> part = Inventory.lookupPart(x);
 
             if (part.isEmpty()){
                 displayInfoAlert("Part not found", "Search term returned no results");
-                partSearch.setText("");
+                partSearchButton.setText("");
                 return;
             }
 
             partTable.setItems(part);
 
-            partSearch.setText("");
+            partSearchButton.setText("");
         }
         catch (Exception e) {
-            String q = partSearch.getText();
+            String q = partSearchButton.getText();
 
             ObservableList<Part> part = Inventory.lookupPart(q);
 
             if (part.isEmpty()){
                 displayInfoAlert("Part not found", "Search term returned no results");
-                partSearch.setText("");
+                partSearchButton.setText("");
                 return;
             }
 
             partTable.setItems(part);
 
-            partSearch.setText("");
+            partSearchButton.setText("");
         }
     }
 
@@ -95,34 +95,34 @@ public class MainController implements Initializable {
 
     public void getProductSearchResults(ActionEvent actionEvent){
         try {
-            int x = Integer.parseInt(productSearch.getText());
+            int x = Integer.parseInt(productSearchButton.getText());
 
             ObservableList<Product> product = Inventory.lookupProduct(x);
 
             if (product.isEmpty()){
                 displayInfoAlert("Product not found", "Search term returned no results");
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                productSearch.setText("");
+                productSearchButton.setText("");
                 return;
             }
             productTable.setItems(product);
 
-            productSearch.setText("");
+            productSearchButton.setText("");
         }
         catch (Exception e) {
-            String q = productSearch.getText();
+            String q = productSearchButton.getText();
 
             ObservableList<Product> product = Inventory.lookupProduct(q);
 
             if (product.isEmpty()){
                 displayInfoAlert("Product not found", "Search term returned no results");
-                productSearch.setText("");
+                productSearchButton.setText("");
                 return;
             }
 
             productTable.setItems(product);
 
-            productSearch.setText("");
+            productSearchButton.setText("");
         }
     }
 
@@ -148,7 +148,7 @@ public class MainController implements Initializable {
 
     public void OnModifyPartClicked(ActionEvent actionEvent) throws IOException {
         //loads Modify Part scene
-        ModifyPart.selectedPart = partTable.getSelectionModel().getSelectedItem();
+        ModifyPartController.selectedPart = partTable.getSelectionModel().getSelectedItem();
         Parent root = FXMLLoader.load(getClass().getResource("ModifyPart.fxml"));
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
@@ -184,7 +184,7 @@ public class MainController implements Initializable {
 
     public void OnModifyProductClicked(ActionEvent actionEvent) throws IOException {
         //loads ModifyProduct scene
-        ModifyProduct.selectedProduct = productTable.getSelectionModel().getSelectedItem();
+        ModifyProductController.selectedProduct = productTable.getSelectionModel().getSelectedItem();
         Parent root = FXMLLoader.load(getClass().getResource("ModifyProduct.fxml"));
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);

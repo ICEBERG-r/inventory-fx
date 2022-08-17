@@ -12,20 +12,20 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ModifyPart implements Initializable {
-    public TextField fieldID;
-    public TextField fieldName;
-    public TextField fieldInv;
-    public TextField fieldCost;
-    public TextField fieldMax;
-    public TextField fieldMachineId;
-    public TextField fieldMin;
+public class ModifyPartController implements Initializable {
+    public TextField idField;
+    public TextField nameField;
+    public TextField invField;
+    public TextField priceField;
+    public TextField maxField;
+    public TextField machineIdCompanyNameField;
+    public TextField minField;
     public RadioButton inHouseRadio;
     public RadioButton outsourcedRadio;
-    public Button save;
-    public Button cancel;
+    public Button saveButton;
+    public Button cancelButton;
     public Label machineIdCompanyNameLabel;
-    public ToggleGroup tgroup;
+    public ToggleGroup toggleGroup;
 
     private int partIndex;
 
@@ -37,22 +37,22 @@ public class ModifyPart implements Initializable {
     }
     public void setPart(Part selectedPart) {
         partIndex = Inventory.getAllParts().indexOf(selectedPart);
-        fieldID.setText(Integer.toString(selectedPart.getId()));
-        fieldName.setText(selectedPart.getName());
-        fieldInv.setText(Integer.toString(selectedPart.getStock()));
-        fieldCost.setText(Double.toString(selectedPart.getPrice()));
-        fieldMax.setText(Integer.toString(selectedPart.getMax()));
-        fieldMin.setText(Integer.toString(selectedPart.getMin()));
+        idField.setText(Integer.toString(selectedPart.getId()));
+        nameField.setText(selectedPart.getName());
+        invField.setText(Integer.toString(selectedPart.getStock()));
+        priceField.setText(Double.toString(selectedPart.getPrice()));
+        maxField.setText(Integer.toString(selectedPart.getMax()));
+        minField.setText(Integer.toString(selectedPart.getMin()));
         if(selectedPart instanceof InHouse){
             inHouseRadio.setSelected(true);
             this.machineIdCompanyNameLabel.setText("Machine ID");
-            fieldMachineId.setText(Integer.toString(((InHouse) selectedPart).getMachineId()));
+            machineIdCompanyNameField.setText(Integer.toString(((InHouse) selectedPart).getMachineId()));
         }
         else{
             Outsourced outsourced = (Outsourced) selectedPart;
             outsourcedRadio.setSelected(true);
             this.machineIdCompanyNameLabel.setText("Company Name");
-            fieldMachineId.setText(outsourced.getCompanyName());
+            machineIdCompanyNameField.setText(outsourced.getCompanyName());
         }
     }
     public void InHouseSelected(ActionEvent actionEvent) {
@@ -67,9 +67,9 @@ public class ModifyPart implements Initializable {
 
     public void OnSaveClicked(ActionEvent actionEvent) {
         try {
-            int inventory = Integer.parseInt(fieldInv.getText());
-            int min = Integer.parseInt(fieldMin.getText());
-            int max = Integer.parseInt(fieldMax.getText());
+            int inventory = Integer.parseInt(invField.getText());
+            int min = Integer.parseInt(minField.getText());
+            int max = Integer.parseInt(maxField.getText());
             if (max < min){
                 MainController.displayInfoAlert("Input Error","Part minimum must be less than maximum");
             }
@@ -77,16 +77,24 @@ public class ModifyPart implements Initializable {
                 MainController.displayInfoAlert("Input Error","Part inventory must be between minimum and maximum");
             }
             else {
-                int id = Integer.parseInt(fieldID.getText());
-                String name = fieldName.getText();
-                double price = Double.parseDouble(fieldCost.getText());
+                int id = Integer.parseInt(idField.getText());
+                String name = nameField.getText();
+                if (name.equals("")) {
+                    MainController.displayInfoAlert("Input Error", "Part name cannot be blank");
+                    return;
+                }
+                double price = Double.parseDouble(priceField.getText());
                 if (inHouseRadio.isSelected()){
-                    int machId = Integer.parseInt(fieldMachineId.getText());
+                    int machId = Integer.parseInt(machineIdCompanyNameField.getText());
                     InHouse inHouse = new InHouse(id, name, price, inventory, min, max, machId);
                     Inventory.updatePart(partIndex, inHouse);
                 }
                 else {
-                    String coName = fieldMachineId.getText();
+                    String coName = machineIdCompanyNameField.getText();
+                    if (coName.equals("")) {
+                        MainController.displayInfoAlert("Input Error", "Company name cannot be blank");
+                        return;
+                    }
                     Outsourced outsourced = new Outsourced(id,name,price,inventory,min,max,coName);
                     Inventory.updatePart(partIndex, outsourced);
                 }

@@ -16,18 +16,18 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class ModifyProduct implements Initializable {
-    public TextField fieldID;
-    public TextField fieldName;
-    public TextField fieldInv;
-    public TextField fieldCost;
-    public TextField fieldMax;
-    public TextField fieldMin;
-    public Button add;
-    public Button removeAssociatedPart;
-    public Button save;
-    public Button cancel;
-    public TextField fieldSearch;
+public class ModifyProductController implements Initializable {
+    public TextField idField;
+    public TextField nameField;
+    public TextField invField;
+    public TextField priceField;
+    public TextField maxField;
+    public TextField minField;
+    public Button addButton;
+    public Button removeAssociatedPartButton;
+    public Button saveButton;
+    public Button cancelButton;
+    public TextField searchField;
     public TableView<Part> allPartsTable;
     public TableColumn<Object, Object> allPartIdColumn;
     public TableColumn<Object, Object> allPartNameColumn;
@@ -65,12 +65,12 @@ public class ModifyProduct implements Initializable {
 
     public void setProduct(Product selectedProduct){
         productIndex = Inventory.getAllProducts().indexOf(selectedProduct);
-        fieldID.setText(Integer.toString(selectedProduct.getId()));
-        fieldName.setText(selectedProduct.getName());
-        fieldInv.setText(Integer.toString(selectedProduct.getStock()));
-        fieldCost.setText(Double.toString(selectedProduct.getPrice()));
-        fieldMax.setText(Integer.toString(selectedProduct.getMax()));
-        fieldMin.setText(Integer.toString(selectedProduct.getMin()));
+        idField.setText(Integer.toString(selectedProduct.getId()));
+        nameField.setText(selectedProduct.getName());
+        invField.setText(Integer.toString(selectedProduct.getStock()));
+        priceField.setText(Double.toString(selectedProduct.getPrice()));
+        maxField.setText(Integer.toString(selectedProduct.getMax()));
+        minField.setText(Integer.toString(selectedProduct.getMin()));
     }
     public void OnAddButtonClicked(ActionEvent actionEvent) {
         Part part = allPartsTable.getSelectionModel().getSelectedItem();
@@ -103,21 +103,25 @@ public class ModifyProduct implements Initializable {
 
     public void OnSaveClicked(ActionEvent actionEvent) {
         try {
-            int inventory = Integer.parseInt(fieldInv.getText());
-            int min = Integer.parseInt(fieldMin.getText());
-            int max = Integer.parseInt(fieldMax.getText());
+            int inv = Integer.parseInt(invField.getText());
+            int min = Integer.parseInt(minField.getText());
+            int max = Integer.parseInt(maxField.getText());
             if (max < min){
                 MainController.displayInfoAlert("Input Error","Part minimum must be less than maximum");
             }
-            else if (inventory < min || inventory > max){
+            else if (inv < min || inv > max){
                 MainController.displayInfoAlert("Input Error","Part inventory must be between minimum and maximum");
             }
             else {
-                int id = Integer.parseInt(fieldID.getText());
-                String name = fieldName.getText();
-                double price = Double.parseDouble(fieldCost.getText());
+                int id = Integer.parseInt(idField.getText());
+                String name = nameField.getText();
+                if (name.equals("")) {
+                    MainController.displayInfoAlert("Input Error", "Product name cannot be blank");
+                    return;
+                }
+                double price = Double.parseDouble(priceField.getText());
                 selectedProduct.setID(id);
-                selectedProduct.setStock(inventory);
+                selectedProduct.setStock(inv);
                 selectedProduct.setMin(min);
                 selectedProduct.setMax(max);
                 selectedProduct.setName(name);
@@ -152,34 +156,34 @@ public class ModifyProduct implements Initializable {
     public void GetPartSearchResults(ActionEvent actionEvent) {
 
         try {
-            int x = Integer.parseInt(fieldSearch.getText());
+            int x = Integer.parseInt(searchField.getText());
 
             ObservableList<Part> part = Inventory.lookupPart(x);
 
             if (part.isEmpty()){
                 MainController.displayInfoAlert("Product not found", "Search term returned no results");
-                fieldSearch.setText("");
+                searchField.setText("");
                 return;
             }
 
             allPartsTable.setItems(part);
 
-            fieldSearch.setText("");
+            searchField.setText("");
         }
         catch (Exception e) {
-            String q = fieldSearch.getText();
+            String q = searchField.getText();
 
             ObservableList<Part> part = Inventory.lookupPart(q);
 
             if (part.isEmpty()){
                 MainController.displayInfoAlert("Product not found", "Search term returned no results");
-                fieldSearch.setText("");
+                searchField.setText("");
                 return;
             }
 
             allPartsTable.setItems(part);
 
-            fieldSearch.setText("");
+            searchField.setText("");
         }
     }
 }

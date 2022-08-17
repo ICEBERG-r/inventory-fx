@@ -15,12 +15,12 @@
           <Font size="24.0" />
         </font>
     </Label>
-    <Button fx:id="addPart" layoutX="158.0" layoutY="348.0" mnemonicParsing="false" onAction="#OnAddPartClicked" text="Add" />
-    <Button fx:id="modifyPart" layoutX="218.0" layoutY="348.0" mnemonicParsing="false" onAction="#OnModifyPartClicked" text="Modify" />
-    <Button fx:id="deletePart" layoutX="287.0" layoutY="348.0" mnemonicParsing="false" onAction="#OnDeletePartClicked" text="Delete" />
-    <Button fx:id="addProduct" layoutX="459.0" layoutY="348.0" mnemonicParsing="false" onAction="#OnAddProductClicked" text="Add" />
-    <Button fx:id="modifyProduct" layoutX="535.0" layoutY="348.0" mnemonicParsing="false" onAction="#OnModifyProductClicked" text="Modify" />
-    <Button fx:id="deleteProduct" layoutX="600.0" layoutY="348.0" mnemonicParsing="false" onAction="#OnDeleteProductClicked" text="Delete" />
+    <Button fx:id="addPartButton" layoutX="158.0" layoutY="348.0" mnemonicParsing="false" onAction="#OnAddPartClicked" text="Add" />
+    <Button fx:id="modifyPartButton" layoutX="218.0" layoutY="348.0" mnemonicParsing="false" onAction="#OnModifyPartClicked" text="Modify" />
+    <Button fx:id="deletePartButton" layoutX="287.0" layoutY="348.0" mnemonicParsing="false" onAction="#OnDeletePartClicked" text="Delete" />
+    <Button fx:id="addProductButton" layoutX="459.0" layoutY="348.0" mnemonicParsing="false" onAction="#OnAddProductClicked" text="Add" />
+    <Button fx:id="modifyProductButton" layoutX="535.0" layoutY="348.0" mnemonicParsing="false" onAction="#OnModifyProductClicked" text="Modify" />
+    <Button fx:id="deleteProductButton" layoutX="600.0" layoutY="348.0" mnemonicParsing="false" onAction="#OnDeleteProductClicked" text="Delete" />
     <Label layoutX="147.0" layoutY="132.0" text="Part" />
     <Label layoutX="458.0" layoutY="132.0" text="Product" />
     <TableView fx:id="partTable" layoutX="91.0" layoutY="150.0" prefHeight="200.0" prefWidth="313.0">
@@ -39,6 +39,6 @@
           <TableColumn fx:id="productCostColumn" prefWidth="75.0" text="Price/Cost per Unit" />
       </columns>
     </TableView>
-    <TextField fx:id="partSearch" layoutX="203.0" layoutY="119.0" onAction="#getPartSearchResults" promptText="Search" />
-    <TextField fx:id="productSearch" layoutX="526.0" layoutY="119.0" onAction="#getProductSearchResults" promptText="Search" />
+    <TextField fx:id="partSearchButton" layoutX="203.0" layoutY="119.0" onAction="#getPartSearchResults" promptText="Search" />
+    <TextField fx:id="productSearchButton" layoutX="526.0" layoutY="119.0" onAction="#getProductSearchResults" promptText="Search" />
 </AnchorPane>

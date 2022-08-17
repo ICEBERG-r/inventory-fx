@@ -8,39 +8,38 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class AddPart implements Initializable {
-    public TextField fieldID;
-    public TextField fieldName;
-    public TextField fieldInv;
-    public TextField fieldCost;
-    public TextField fieldMax;
-    public TextField fieldMachineIdCompanyName;
+public class AddPartController implements Initializable {
+    public TextField idField;
+    public TextField nameField;
+    public TextField invField;
+    public TextField priceField;
+    public TextField maxField;
+    public TextField machineIdCompanyNameField;
     public TextField fieldMin;
     public RadioButton inHouseRadio;
     public RadioButton outsourcedRadio;
     public Button saveButton;
     public Button cancelButton;
     public Label machineIdCompanyNameLabel;
-    public ToggleGroup tparts;
+    public ToggleGroup toggleGroup;
 
     public void initialize(URL url, ResourceBundle resourceBundle){
 
     }
 
-    public void InHouseSelected(ActionEvent actionEvent) {
+    public void onInHouseSelected(ActionEvent actionEvent) {
         machineIdCompanyNameLabel.setText("Machine ID");
     }
 
-    public void OutsourcedSelected(ActionEvent actionEvent) {
+    public void onOutsourcedSelected(ActionEvent actionEvent) {
         machineIdCompanyNameLabel.setText("Company Name");
     }
 
-    public void OnCancelClicked(ActionEvent actionEvent) throws IOException {
+    public void onCancelClicked(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("MainWindow.fxml"));
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
@@ -49,7 +48,7 @@ public class AddPart implements Initializable {
         stage.show();
     }
 
-    public static int getNewID(){
+    public static int generateNewID(){
         int id = 1;
         for (int i = 0; i < Inventory.getAllParts().size(); i++){
             id++;
@@ -59,29 +58,37 @@ public class AddPart implements Initializable {
 
     }
 
-    public void OnSaveClicked(ActionEvent actionEvent) {
+    public void onSaveClicked(ActionEvent actionEvent) {
         try {
-            int inventory = Integer.parseInt(fieldInv.getText());
+            int inv = Integer.parseInt(invField.getText());
             int min = Integer.parseInt(fieldMin.getText());
-            int max = Integer.parseInt(fieldMax.getText());
+            int max = Integer.parseInt(maxField.getText());
             if (max < min){
                 MainController.displayInfoAlert("Input Error","Part minimum must be less than maximum");
             }
-            else if (inventory < min || inventory > max){
+            else if (inv < min || inv > max){
                 MainController.displayInfoAlert("Input Error","Part inventory must be between minimum and maximum");
             }
             else {
-                int id = getNewID();
-                String name = fieldName.getText();
-                double price = Double.parseDouble(fieldCost.getText());
+                int id = generateNewID();
+                String name = nameField.getText();
+                if (name.equals("")){
+                    MainController.displayInfoAlert("Input Error", "Part name cannot be blank");
+                    return;
+                }
+                double price = Double.parseDouble(priceField.getText());
                 if (inHouseRadio.isSelected()){
-                    int machId = Integer.parseInt(fieldMachineIdCompanyName.getText());
-                    InHouse inHouse = new InHouse(id, name, price, inventory, min, max, machId);
+                    int machId = Integer.parseInt(machineIdCompanyNameField.getText());
+                    InHouse inHouse = new InHouse(id, name, price, inv, min, max, machId);
                     Inventory.addPart(inHouse);
                 }
                 else {
-                    String coName = fieldMachineIdCompanyName.getText();
-                    Outsourced outsourced = new Outsourced(id, name, price, inventory, min, max, coName);
+                    String coName = machineIdCompanyNameField.getText();
+                    if (coName.equals("")){
+                        MainController.displayInfoAlert("Input Error", "Company name cannot be blank");
+                        return;
+                    }
+                    Outsourced outsourced = new Outsourced(id, name, price, inv, min, max, coName);
                     Inventory.addPart(outsourced);
                 }
                 Parent root = FXMLLoader.load(getClass().getResource("MainWindow.fxml"));
