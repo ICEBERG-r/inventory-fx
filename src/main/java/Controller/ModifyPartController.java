@@ -1,5 +1,9 @@
-package com.mwilson.inventoryfx;
+package Controller;
 
+import Model.InHouse;
+import Model.Inventory;
+import Model.Outsourced;
+import Model.Part;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -98,7 +102,7 @@ public class ModifyPartController implements Initializable {
                     Outsourced outsourced = new Outsourced(id,name,price,inventory,min,max,coName);
                     Inventory.updatePart(partIndex, outsourced);
                 }
-                Parent root = FXMLLoader.load(getClass().getResource("MainWindow.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("/src/main/java/View/MainWindow.fxml"));
                 Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root);
                 stage.setTitle("Inventory Management System");
@@ -112,7 +116,7 @@ public class ModifyPartController implements Initializable {
     }
 
     public void OnCancelClicked(ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("MainWindow.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/src/main/java/View/MainWindow.fxml"));
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setTitle("Inventory Management System");

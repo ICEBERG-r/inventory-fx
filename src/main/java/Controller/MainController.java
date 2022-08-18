@@ -1,5 +1,8 @@
-package com.mwilson.inventoryfx;
+package Controller;
 
+import Model.Inventory;
+import Model.Part;
+import Model.Product;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -138,7 +141,7 @@ public class MainController implements Initializable {
 
     public void OnAddPartClicked(ActionEvent actionEvent) throws IOException {
         //loads AddPart scene
-        Parent root = FXMLLoader.load(getClass().getResource("AddPart.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/src/main/java/View/AddPart.fxml"));
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setTitle("Add Part");
@@ -149,7 +152,7 @@ public class MainController implements Initializable {
     public void OnModifyPartClicked(ActionEvent actionEvent) throws IOException {
         //loads Modify Part scene
         ModifyPartController.selectedPart = partTable.getSelectionModel().getSelectedItem();
-        Parent root = FXMLLoader.load(getClass().getResource("ModifyPart.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/src/main/java/View/ModifyPart.fxml"));
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setTitle("Modify Part");
@@ -174,7 +177,7 @@ public class MainController implements Initializable {
 
     public void OnAddProductClicked(ActionEvent actionEvent) throws IOException {
         //loads AddProduct scene
-        Parent root = FXMLLoader.load(getClass().getResource("AddProduct.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/src/main/java/View/AddProduct.fxml"));
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setTitle("Add Product");
@@ -185,7 +188,7 @@ public class MainController implements Initializable {
     public void OnModifyProductClicked(ActionEvent actionEvent) throws IOException {
         //loads ModifyProduct scene
         ModifyProductController.selectedProduct = productTable.getSelectionModel().getSelectedItem();
-        Parent root = FXMLLoader.load(getClass().getResource("ModifyProduct.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/src/main/java/View/ModifyProduct.fxml"));
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setTitle("Modify Product");

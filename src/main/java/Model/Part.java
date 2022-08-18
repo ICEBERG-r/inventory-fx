@@ -1,4 +1,4 @@
-package com.mwilson.inventoryfx;
+package Model;
 
 /**
  * Supplied class Part.java

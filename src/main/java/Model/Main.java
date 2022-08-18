@@ -1,4 +1,4 @@
-package com.mwilson.inventoryfx;
+package Model;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +16,7 @@ public class Main extends Application {
         Inventory.addProduct(new Product(1001, "Yooooo", 35.00, 20, 5, 70));
         Inventory.addProduct(new Product(1002, "Aw Yea", 420.69, 420, 69, 420));
 
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("MainWindow.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/src/main/java/View/MainWindow.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 800, 600);
         stage.setTitle("Inventory Management System");
         stage.setScene(scene);

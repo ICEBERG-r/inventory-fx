@@ -1,4 +1,4 @@
-package com.mwilson.inventoryfx;
+package Model;
 
 import javafx.collections.ObservableList;
 import javafx.collections.FXCollections;

@@ -1,5 +1,8 @@
-package com.mwilson.inventoryfx;
+package Controller;
 
+import Model.Inventory;
+import Model.Part;
+import Model.Product;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,7 +19,7 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class ModifyProductController implements Initializable {
+public class AddProductController implements Initializable {
     public TextField idField;
     public TextField nameField;
     public TextField invField;
@@ -28,6 +31,7 @@ public class ModifyProductController implements Initializable {
     public Button saveButton;
     public Button cancelButton;
     public TextField searchField;
+
     public TableView<Part> allPartsTable;
     public TableColumn<Object, Object> allPartIdColumn;
     public TableColumn<Object, Object> allPartNameColumn;
@@ -39,14 +43,11 @@ public class ModifyProductController implements Initializable {
     public TableColumn<Object, Object> associatedPartInventoryColumn;
     public TableColumn<Object, Object> associatedPartCostColumn;
 
-    public static Product selectedProduct;
-    private int productIndex;
-
     private static ObservableList<Part> allParts = FXCollections.observableArrayList();
     private static ObservableList<Part> associatedParts = FXCollections.observableArrayList();
 
     public void initialize(URL url, ResourceBundle resourceBundle){
-        setProduct(selectedProduct);
+
         allParts.setAll(Inventory.getAllParts());
         allPartsTable.setItems(allParts);
 
@@ -63,74 +64,68 @@ public class ModifyProductController implements Initializable {
         associatedPartCostColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
     }
 
-    public void setProduct(Product selectedProduct){
-        productIndex = Inventory.getAllProducts().indexOf(selectedProduct);
-        idField.setText(Integer.toString(selectedProduct.getId()));
-        nameField.setText(selectedProduct.getName());
-        invField.setText(Integer.toString(selectedProduct.getStock()));
-        priceField.setText(Double.toString(selectedProduct.getPrice()));
-        maxField.setText(Integer.toString(selectedProduct.getMax()));
-        minField.setText(Integer.toString(selectedProduct.getMin()));
-    }
     public void OnAddButtonClicked(ActionEvent actionEvent) {
         Part part = allPartsTable.getSelectionModel().getSelectedItem();
 
         if (part == null){
-            MainController.displayInfoAlert("Error","A part must be selected before association");
+            MainController.displayInfoAlert("ERROR", "Part must be selected");
+            return;
         }
 
         allParts.remove(part);
         associatedParts.add(part);
+
     }
 
     public void OnRemoveAssociatedPartClicked(ActionEvent actionEvent) {
         Part part = associatedPartsTable.getSelectionModel().getSelectedItem();
 
         if (part == null){
-            MainController.displayInfoAlert("Error","A part must be selected before removal");
+            MainController.displayInfoAlert("ERROR", "Part must be selected");
+            return;
         }
+
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Remove part?");
-        alert.setHeaderText("Are you sure you want to remove this part?");
+        alert.setTitle("Remove Part?");
+        alert.setHeaderText("Are you sure you want remove this part?");
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get().equals(ButtonType.OK)){
-            selectedProduct.deleteAssociatedPart(part);
             associatedParts.remove(part);
             allParts.add(part);
         }
 
     }
+    public static int getNewID(){
+        int id = 1;
+        for (int i = 0; i < Inventory.getAllProducts().size(); i++){
+            id++;
+        }
+        return id;
 
+    }
     public void OnSaveClicked(ActionEvent actionEvent) {
         try {
             int inv = Integer.parseInt(invField.getText());
             int min = Integer.parseInt(minField.getText());
             int max = Integer.parseInt(maxField.getText());
             if (max < min){
-                MainController.displayInfoAlert("Input Error","Part minimum must be less than maximum");
+                MainController.displayInfoAlert("Input Error","Product minimum must be less than maximum");
             }
             else if (inv < min || inv > max){
-                MainController.displayInfoAlert("Input Error","Part inventory must be between minimum and maximum");
+                MainController.displayInfoAlert("Input Error","Product inventory must be between minimum and maximum");
             }
             else {
-                int id = Integer.parseInt(idField.getText());
+                int id = getNewID();
                 String name = nameField.getText();
                 if (name.equals("")) {
                     MainController.displayInfoAlert("Input Error", "Product name cannot be blank");
                     return;
                 }
                 double price = Double.parseDouble(priceField.getText());
-                selectedProduct.setID(id);
-                selectedProduct.setStock(inv);
-                selectedProduct.setMin(min);
-                selectedProduct.setMax(max);
-                selectedProduct.setName(name);
-                selectedProduct.setPrice(price);
-                selectedProduct.getAllAssociatedParts().clear();
-                selectedProduct.addAssociatedPart(associatedParts);
-                Inventory.updateProduct(productIndex, selectedProduct);
-
-                Parent root = FXMLLoader.load(getClass().getResource("MainWindow.fxml"));
+                Product product = new Product(id,name,price,inv,min,max);
+                product.addAssociatedPart(associatedParts);
+                Inventory.addProduct(product);
+                Parent root = FXMLLoader.load(getClass().getResource("/src/main/java/View/MainWindow.fxml"));
                 Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root);
                 stage.setTitle("Inventory Management System");
@@ -139,14 +134,12 @@ public class ModifyProductController implements Initializable {
 
             }
         } catch (Exception e){
-            MainController.displayInfoAlert("Input Error","Inventory, Cost, Min, Max, and Machine ID fields must contain numerical values");
+            MainController.displayInfoAlert("Input Error","Inventory, Price, Min and Max fields must contain numerical values");
         }
-
-
     }
 
     public void OnCancelClicked(ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("MainWindow.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/src/main/java/View/MainWindow.fxml"));
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setTitle("Inventory Management System");
@@ -161,7 +154,7 @@ public class ModifyProductController implements Initializable {
             ObservableList<Part> part = Inventory.lookupPart(x);
 
             if (part.isEmpty()){
-                MainController.displayInfoAlert("Product not found", "Search term returned no results");
+                MainController.displayInfoAlert("Product not found","Search term returned no results");
                 searchField.setText("");
                 return;
             }
@@ -176,7 +169,7 @@ public class ModifyProductController implements Initializable {
             ObservableList<Part> part = Inventory.lookupPart(q);
 
             if (part.isEmpty()){
-                MainController.displayInfoAlert("Product not found", "Search term returned no results");
+                MainController.displayInfoAlert("Product not found","Search term returned no results");
                 searchField.setText("");
                 return;
             }
@@ -186,4 +179,5 @@ public class ModifyProductController implements Initializable {
             searchField.setText("");
         }
     }
+
 }
