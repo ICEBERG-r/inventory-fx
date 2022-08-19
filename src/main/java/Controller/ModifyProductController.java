@@ -19,6 +19,8 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/** Creates the Modify Product window of the application. */
+
 public class ModifyProductController implements Initializable {
     public TextField idField;
     public TextField nameField;
@@ -66,6 +68,8 @@ public class ModifyProductController implements Initializable {
         associatedPartCostColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
     }
 
+    /** Takes the attributes of the selected product and fills in the text fields with that information.
+     * Also sets the index of the product so the information can be updated correctly in the Inventory. */
     public void setProduct(Product selectedProduct){
         productIndex = Inventory.getAllProducts().indexOf(selectedProduct);
         idField.setText(Integer.toString(selectedProduct.getId()));
@@ -75,6 +79,9 @@ public class ModifyProductController implements Initializable {
         maxField.setText(Integer.toString(selectedProduct.getMax()));
         minField.setText(Integer.toString(selectedProduct.getMin()));
     }
+
+    /** Adds a selected part to the associated parts list and removes it from the local allParts list when the 'Add' button is clicked.
+     * A part must be selected before it can be associated with a product. */
     public void OnAddButtonClicked(ActionEvent actionEvent) {
         Part part = allPartsTable.getSelectionModel().getSelectedItem();
 
@@ -86,6 +93,8 @@ public class ModifyProductController implements Initializable {
         associatedParts.add(part);
     }
 
+    /** Removes a selected part from the associated parts list.
+     * A part must be selected before it can be disassociated. */
     public void OnRemoveAssociatedPartClicked(ActionEvent actionEvent) {
         Part part = associatedPartsTable.getSelectionModel().getSelectedItem();
 
@@ -104,6 +113,9 @@ public class ModifyProductController implements Initializable {
 
     }
 
+    /** Updates a product with the given information and saves it to the inventory.
+     * All fields must be filled with the proper input.
+     * User must confirm before product is saved.*/
     public void OnSaveClicked(ActionEvent actionEvent) {
         try {
             int inv = Integer.parseInt(invField.getText());
@@ -148,6 +160,7 @@ public class ModifyProductController implements Initializable {
 
     }
 
+    /** Returns the user to the Main Window when the 'Cancel' button is clicked. */
     public void OnCancelClicked(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/src/main/java/View/MainWindow.fxml"));
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
@@ -156,6 +169,8 @@ public class ModifyProductController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+
+    /** Filters the part table based on a search query. The user can search by part ID or by the part name. */
     public void GetPartSearchResults(ActionEvent actionEvent) {
 
         try {

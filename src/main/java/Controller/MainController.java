@@ -18,6 +18,7 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/** This class creates the main window for the application. */
 public class MainController implements Initializable {
 
     public Button addPartButton;
@@ -60,6 +61,7 @@ public class MainController implements Initializable {
 
     }
 
+    /** Filters the part table based on a search query. The user can search by part ID or by the part name. */
     public void getPartSearchResults(ActionEvent actionEvent) {
 
         try {
@@ -95,7 +97,7 @@ public class MainController implements Initializable {
     }
 
 
-
+    /** Filters the product table based on a search query. The user can search by product ID or by the product name.*/
     public void getProductSearchResults(ActionEvent actionEvent){
         try {
             int x = Integer.parseInt(productSearchButton.getText());
@@ -129,6 +131,7 @@ public class MainController implements Initializable {
         }
     }
 
+    /** Exits the program when the 'Exit' button is clicked. Method confirms the action before exiting the program.*/
     public void OnExitClicked(ActionEvent actionEvent) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Exit");
@@ -139,6 +142,7 @@ public class MainController implements Initializable {
         }
     }
 
+    /** Takes the user to the AddPart window when the 'Add' button under the part table is clicked. */
     public void OnAddPartClicked(ActionEvent actionEvent) throws IOException {
         //loads AddPart scene
         Parent root = FXMLLoader.load(getClass().getResource("/src/main/java/View/AddPart.fxml"));
@@ -148,6 +152,8 @@ public class MainController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+
+    /** Takes the user to the ModifyPart window when the 'Modify' button under the part table is clicked. */
 
     public void OnModifyPartClicked(ActionEvent actionEvent) throws IOException {
         //loads Modify Part scene
@@ -160,6 +166,8 @@ public class MainController implements Initializable {
         stage.show();
     }
 
+    /** Deletes the selected part from the inventory when the 'Delete' button is clicked.
+     * User is asked for confirmation before deletion. */
     public void OnDeletePartClicked(ActionEvent actionEvent) {
         Part selectedPart = partTable.getSelectionModel().getSelectedItem();
         if (selectedPart == null){
@@ -175,6 +183,7 @@ public class MainController implements Initializable {
         }
     }
 
+    /** Takes the user to the AddProduct window when the 'Add' button under the product table is clicked. */
     public void OnAddProductClicked(ActionEvent actionEvent) throws IOException {
         //loads AddProduct scene
         Parent root = FXMLLoader.load(getClass().getResource("/src/main/java/View/AddProduct.fxml"));
@@ -185,6 +194,7 @@ public class MainController implements Initializable {
         stage.show();
     }
 
+    /** Takes the user to the ModifyProduct window when the 'Modify' button under the product table is clicked. */
     public void OnModifyProductClicked(ActionEvent actionEvent) throws IOException {
         //loads ModifyProduct scene
         ModifyProductController.selectedProduct = productTable.getSelectionModel().getSelectedItem();
@@ -196,6 +206,8 @@ public class MainController implements Initializable {
         stage.show();
     }
 
+    /** Deletes the selected product from the inventory when the 'Delete' button under the product table is clicked.
+     * User is asked for confirmation before deletion. A product cannot be removed if it has parts associated with it. */
     public void OnDeleteProductClicked(ActionEvent actionEvent) {
         //needs confirmation dialog prompt
         Product selectedProduct = productTable.getSelectionModel().getSelectedItem();
@@ -220,6 +232,9 @@ public class MainController implements Initializable {
 
 
     }
+    /** Displays an informational alert to the user.
+     * @param title This is a string that will appear both in the title and in the header text.
+     * @param elaboration This is an explanation of the alert. */
     public static void displayInfoAlert(String title, String elaboration){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);

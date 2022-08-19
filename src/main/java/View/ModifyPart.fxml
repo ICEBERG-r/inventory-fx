@@ -15,11 +15,11 @@
                 <Font size="18.0" />
             </font>
         </Label>
-        <RadioButton fx:id="inHouseRadio" layoutX="184.0" layoutY="54.0" mnemonicParsing="false" onAction="#InHouseSelected" text="In-House">
+        <RadioButton fx:id="inHouseRadio" layoutX="184.0" layoutY="54.0" mnemonicParsing="false" onAction="#onInHouseSelected" text="In-House">
          <toggleGroup>
             <ToggleGroup fx:id="toggleGroup" />
          </toggleGroup></RadioButton>
-        <RadioButton fx:id="outsourcedRadio" layoutX="336.0" layoutY="54.0" mnemonicParsing="false" onAction="#OutsourcedSelected" text="Outsourced" toggleGroup="$toggleGroup" />
+        <RadioButton fx:id="outsourcedRadio" layoutX="336.0" layoutY="54.0" mnemonicParsing="false" onAction="#onOutsourcedSelected" text="Outsourced" toggleGroup="$toggleGroup" />
         <Button fx:id="saveButton" layoutX="464.0" layoutY="353.0" mnemonicParsing="false" onAction="#OnSaveClicked" text="Save" />
         <Button fx:id="cancelButton" layoutX="526.0" layoutY="353.0" mnemonicParsing="false" onAction="#OnCancelClicked" text="Cancel" />
         <TextField fx:id="idField" disable="true" editable="false" layoutX="141.0" layoutY="111.0" text="Auto Generated" />

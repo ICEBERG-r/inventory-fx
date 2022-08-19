@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/** Creates the Add Part window of the application. */
 public class AddPartController implements Initializable {
     public TextField idField;
     public TextField nameField;
@@ -34,14 +35,17 @@ public class AddPartController implements Initializable {
 
     }
 
+    /** Changes the label of the field to 'Machine ID' if the In House radio button is selected. */
     public void onInHouseSelected(ActionEvent actionEvent) {
         machineIdCompanyNameLabel.setText("Machine ID");
     }
 
+    /** Changes the label of the field to 'Company Name' if the Outsourced radio button is selected. */
     public void onOutsourcedSelected(ActionEvent actionEvent) {
         machineIdCompanyNameLabel.setText("Company Name");
     }
 
+    /** Returns the user to the Main Window when the 'Cancel' button is clicked. */
     public void onCancelClicked(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/src/main/java/View/MainWindow.fxml"));
         Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
@@ -51,6 +55,8 @@ public class AddPartController implements Initializable {
         stage.show();
     }
 
+    /** Generates a new ID for a part.
+     * ID numbers start at 9001 and are incremented by one as the amount of parts in the inventory increases. */
     public static int generateNewID(){
         int id = 1;
         for (int i = 0; i < Inventory.getAllParts().size(); i++){
@@ -61,6 +67,9 @@ public class AddPartController implements Initializable {
 
     }
 
+    /** Creates a new part with the given information and saves it to the inventory.
+     * All fields must be filled with the proper input.
+     * User must confirm before part is saved.*/
     public void onSaveClicked(ActionEvent actionEvent) {
         try {
             int inv = Integer.parseInt(invField.getText());

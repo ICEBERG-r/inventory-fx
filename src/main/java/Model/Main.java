@@ -1,5 +1,17 @@
 package Model;
 
+/* Mark Wilson
+*  Student ID: 010314264
+*
+*  Error elaboration is located within the initialize method of AddProductController.
+*
+*  -Future Improvements-
+*   The program should store inventory data beyond the runtime of the application.
+*   Develop a method of storing commonly bundled products in Inventory.
+*   The ability to store and display a short description of the part or product.
+*   A field for storing and displaying notes related to the part or product.
+*
+ */
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -7,6 +19,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/** This class creates an inventory management application. This application allows the user to store information about Parts and Products.*/
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
