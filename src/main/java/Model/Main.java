@@ -3,7 +3,9 @@ package Model;
 /* Mark Wilson
 *  Student ID: 010314264
 *
-*  Error elaboration is located within the initialize method of AddProductController.
+*   Error elaboration is located within the initialize method of AddProductController.
+*
+*   JavaDoc folder is located in the root of the zip file.
 *
 *  -Future Improvements-
 *   The program should store inventory data beyond the runtime of the application.

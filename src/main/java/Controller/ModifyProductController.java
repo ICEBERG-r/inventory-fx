@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -47,8 +48,8 @@ public class ModifyProductController implements Initializable {
     public static Product selectedProduct;
     private int productIndex;
 
-    private static ObservableList<Part> allParts = FXCollections.observableArrayList();
-    private static ObservableList<Part> associatedParts = FXCollections.observableArrayList();
+    private ObservableList<Part> allParts = FXCollections.observableArrayList();
+    private ObservableList<Part> associatedParts = FXCollections.observableArrayList();
 
     public void initialize(URL url, ResourceBundle resourceBundle){
         setProduct(selectedProduct);
@@ -85,6 +86,7 @@ public class ModifyProductController implements Initializable {
         maxField.setText(Integer.toString(selectedProduct.getMax()));
         minField.setText(Integer.toString(selectedProduct.getMin()));
     }
+
 
     /** Adds a selected part to the associated parts list and removes it from the local allParts list when the 'Add' button is clicked.
      * A part must be selected before it can be associated with a product. */
@@ -185,6 +187,10 @@ public class ModifyProductController implements Initializable {
 
             ObservableList<Part> part = Inventory.lookupPart(x);
 
+            for (Part associatedPart : associatedParts){
+                part.removeIf(foundPart -> foundPart.equals(associatedPart));
+            }
+
             if (part.isEmpty()){
                 MainController.displayInfoAlert("Product not found", "Search term returned no results");
                 searchField.setText("");
@@ -192,13 +198,20 @@ public class ModifyProductController implements Initializable {
             }
 
             allPartsTable.setItems(part);
-
             searchField.setText("");
         }
         catch (Exception e) {
             String q = searchField.getText();
 
+            if (q.equals("")){
+                allPartsTable.setItems(allParts);
+                return;
+            }
             ObservableList<Part> part = Inventory.lookupPart(q);
+
+            for (Part associatedPart : associatedParts){
+                part.removeIf(foundPart -> foundPart.equals(associatedPart));
+            }
 
             if (part.isEmpty()){
                 MainController.displayInfoAlert("Product not found", "Search term returned no results");
@@ -209,6 +222,7 @@ public class ModifyProductController implements Initializable {
             allPartsTable.setItems(part);
 
             searchField.setText("");
+
         }
     }
 }
