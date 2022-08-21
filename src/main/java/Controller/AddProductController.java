@@ -60,6 +60,7 @@ public class AddProductController implements Initializable {
          */
 
         allParts.setAll(Inventory.getAllParts());
+        associatedParts.clear();
         allPartsTable.setItems(allParts);
 
         associatedPartsTable.setItems(associatedParts);

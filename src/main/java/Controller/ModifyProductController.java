@@ -56,6 +56,9 @@ public class ModifyProductController implements Initializable {
         allParts.setAll(Inventory.getAllParts());
         associatedParts.setAll(selectedProduct.getAllAssociatedParts());
 
+        for (Part associatedPart : associatedParts){
+            allParts.removeIf(part -> part.equals(associatedPart));
+        }
         allPartsTable.setItems(allParts);
 
         associatedPartsTable.setItems(associatedParts);
