@@ -144,7 +144,11 @@ public class AddProductController implements Initializable {
                 }
                 double price = Double.parseDouble(priceField.getText());
                 Product product = new Product(id,name,price,inv,min,max);
-                product.addAssociatedPart(associatedParts);
+                for (Part associatedPart : associatedParts) {
+                    product.addAssociatedPart(associatedPart);
+                }
+                //product.getAllAssociatedParts().clear();
+                //product.addAssociatedPart(associatedParts);
                 Inventory.addProduct(product);
                 Parent root = FXMLLoader.load(getClass().getResource("/src/main/java/View/MainWindow.fxml"));
                 Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();

@@ -24,10 +24,10 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-        Inventory.addPart(new InHouse(1,"whoozit", 22.00, 44, 40, 101, 10003));
-        Inventory.addPart(new Outsourced(2, "noway", 22.00, 40, 1, 100, "Stray Catz"));
-        Inventory.addProduct(new Product(1001, "Yooooo", 35.00, 20, 5, 70));
-        Inventory.addProduct(new Product(1002, "Aw Yea", 420.69, 420, 69, 420));
+        Inventory.addPart(new InHouse(9001,"Part 1", 22.00, 44, 40, 101, 10003));
+        Inventory.addPart(new Outsourced(9002, "Part 2", 22.00, 40, 1, 100, "Company 1"));
+        Inventory.addProduct(new Product(1, "Product 1", 35.00, 20, 5, 70));
+        Inventory.addProduct(new Product(2, "Product 2", 20.67, 20, 4, 33));
 
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/src/main/java/View/MainWindow.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 800, 600);

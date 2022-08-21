@@ -52,7 +52,10 @@ public class ModifyProductController implements Initializable {
 
     public void initialize(URL url, ResourceBundle resourceBundle){
         setProduct(selectedProduct);
+
         allParts.setAll(Inventory.getAllParts());
+        associatedParts.setAll(selectedProduct.getAllAssociatedParts());
+
         allPartsTable.setItems(allParts);
 
         associatedPartsTable.setItems(associatedParts);
@@ -88,7 +91,6 @@ public class ModifyProductController implements Initializable {
         if (part == null){
             MainController.displayInfoAlert("Error","A part must be selected before association");
         }
-
         allParts.remove(part);
         associatedParts.add(part);
     }
@@ -100,13 +102,13 @@ public class ModifyProductController implements Initializable {
 
         if (part == null){
             MainController.displayInfoAlert("Error","A part must be selected before removal");
+            return;
         }
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Remove part?");
         alert.setHeaderText("Are you sure you want to remove this part?");
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get().equals(ButtonType.OK)){
-            selectedProduct.deleteAssociatedPart(part);
             associatedParts.remove(part);
             allParts.add(part);
         }
@@ -142,7 +144,9 @@ public class ModifyProductController implements Initializable {
                 selectedProduct.setName(name);
                 selectedProduct.setPrice(price);
                 selectedProduct.getAllAssociatedParts().clear();
-                selectedProduct.addAssociatedPart(associatedParts);
+                for (Part associatedPart : associatedParts) {
+                    selectedProduct.addAssociatedPart(associatedPart);
+                }
                 Inventory.updateProduct(productIndex, selectedProduct);
 
                 Parent root = FXMLLoader.load(getClass().getResource("/src/main/java/View/MainWindow.fxml"));

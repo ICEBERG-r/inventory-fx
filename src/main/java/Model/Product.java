@@ -79,8 +79,8 @@ public class Product {
     }
     /** Adds associated parts to a product.
      * @param part the list of parts to be associated with the product. */
-    public void addAssociatedPart(ObservableList<Part> part){
-        this.associatedParts.addAll(part);
+    public void addAssociatedPart(Part part){
+        associatedParts.add(part);
     }
     /** Removes an associated part from the product.*/
     public boolean deleteAssociatedPart(Part selectedAssociatedPart){
